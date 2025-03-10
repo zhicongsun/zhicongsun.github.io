@@ -1,1 +1,1 @@
-# Welcome to visit [my website](https://zhicongsun.github.io/)
+# Welcome to visit [my homepage](https://zhicongsun.github.io/)
