@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="Embracing Dynamics: Dynamics-aware 4D Gaussian Splatting SLAM">
+  <meta name="keywords" content="D4DGS-SLAM">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>D4DGS-SLAM</title>
+
+
+
+<link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./projects/d4dgs/css/bulma.min.css">
+  <link rel="stylesheet" href="./projects/d4dgs/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./projects/d4dgs/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./projects/d4dgs/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./projects/d4dgs/css/index.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./projects/d4dgs/js/fontawesome.all.min.js"></script>
+  <script src="./projects/d4dgs/js/bulma-carousel.min.js"></script>
+  <script src="./projects/d4dgs/js/bulma-slider.min.js"></script>
+  <script src="./projects/d4dgs/js/index.js"></script>
+</head>
+<body>
+
+
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+        <div class="column has-text-centered">
+          <h1 class="title is-2 publication-title">Embracing Dynamics:</h1>
+          <h1 class="title is-1 publication-title">Dynamics-aware 4D Gaussian Splatting SLAM</h1>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <a href="https://zhicongsun.github.io/">Zhicong Sun</a><sup>1,2</sup></span>&nbsp;&nbsp;&nbsp;&nbsp;
+              <span class="author-block">
+                <a href="">Jinxing Hu</a><sup>2*</sup></span>&nbsp;&nbsp;&nbsp;&nbsp;
+              <span class="author-block">
+              <a href="">Jacqueline Lo</a><sup>1*</sup>&nbsp;&nbsp;&nbsp;&nbsp;
+            </span>
+            
+          </div>
+          <div class="column is-full_width">
+            <h2 class="is-size-6">* Corresponding Authors</h2>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><sup>1</sup>Hong Kong Polytechnic University</span>&nbsp;&nbsp;
+            <span class="author-block"><sup>2</sup>Shenzhen Institutes of Advanced Technology, Chinese Academy of Sciences</span>&nbsp;&nbsp;
+          </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <span class="link-block">
+                <a href="https://arxiv.org/abs/2504.04844" target="_blank"
+                   class="button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Paper</span>
+                </a>
+              </span>
+               <span class="link-block">
+                <a href="https://github.com/zhicongsun/D4DGS-SLAM" target="_blank"
+		   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span >Code</span>
+                  </a>
+              </span> 
+            </div>
+          </div>
+        </div>
+    </div>
+  </div>
+<!-- </section> -->
+
+
+<!-- <section class="section"> -->
+  <div class="container is-max-desktop">
+        <!-- Paper video. -->
+        <div class="columns is-centered has-text-centered">
+          <div class="column is-four-fifths">
+            <!-- <h2 class="title is-3">Video</h2> -->
+            <div class="publication-video">
+              <video id="dollyzoom" autoplay controls muted loop height="100%" playbackRate="2.0">
+                <source src="./projects/d4dgs/videos/intro.mp4" type="video/mp4">
+              </video>
+            </div>
+          </div>
+        </div>
+        <!--/ Paper video. -->
+      
+    <br>
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            Simultaneous localization and mapping (SLAM) technology now has photorealistic mapping capabilities thanks to the real-time high-fidelity rendering capability of 3D Gaussian splatting (3DGS). However, due to the static representation of scenes, current 3DGS-based SLAM encounters issues with pose drift and failure to reconstruct accurate maps in dynamic environments. To address this problem, we present D4DGS-SLAM, the first SLAM method based on 4DGS map representation for dynamic environments. By incorporating the temporal dimension into scene representation, D4DGS-SLAM enables high-quality reconstruction of dynamic scenes. Utilizing the dynamics-aware InfoModule, we can obtain the dynamics, visibility, and reliability of scene points, and filter stable static points for tracking accordingly. When optimizing Gaussian points, we apply different isotropic regularization terms to Gaussians with varying dynamic characteristics. Experimental results on real-world dynamic scene datasets demonstrate that our method outperforms state-of-the-art approaches in both camera pose tracking and map quality.
+          </p>
+        </div>
+      </div>
+    </div>
+    <!--/ Abstract. -->
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-full_width">
+        <hr>
+        <h2 class="title is-3">Method</h2>
+        <br>
+        <img src="projects/d4dgs/overview.png" class="center"/>
+        <div class="content has-text-justified">
+          <br>  
+          <p>
+            <strong>D4DGS-SLAM</strong> uses an RGB-D image sequence as input. We
+            first extract anchors from each incoming RGB frame that
+            are well-distributed globally and reflect the image features.
+            These anchors, along with the RGB images, are fed into
+            the LEAP module to obtain the dynamics and reliability of
+            the anchors. This allows us to distinguish between stable
+            dynamic points and static points. The static anchors are used
+            for tracking to estimate the camera pose. These poses and
+            dynamic information are then sent to the mapping module.
+            We use 4DGS for mapping and select different scale penalty
+            factors based on the dynamics and reliability of the covered
+            points to control the distribution of the Gaussian in space-
+            time. The techniques used and our SLAM system will be
+            introduced below.
+          </p>
+        </div>
+      </div>
+    </div>
+    <!-- <hr> -->
+  </section>
+  
+  <section class="section">
+    <!-- Applications.-->
+    <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-full_width">
+        <hr>
+        <h2 class="title is-3">Results</h2>
+      </div>
+    </div>
+    <!-- <p>
+      &nbsp
+    </p>
+      <p>
+        &nbsp
+      </p>
+      <p>
+        &nbsp
+      </p> -->
+      <h3 class="title is-4">Mapping​</h3>
+      <p>
+        &nbsp
+      </p>
+      <div class="container is-max-desktop">
+        <div class="columns is-centered has-text-centered">
+          <div class="column is-full_width">
+            <h3">Visual comparison of the rendering image on the BONN datasets</h3>
+            <img src="projects/d4dgs/images/bonn.png" class="center"/>
+            <div class="content has-text-justified">
+            </div>
+          </div>
+        </div>
+    <p>
+      &nbsp
+    </p>
+      <p>
+        &nbsp
+      </p>
+        <div class="container is-max-desktop">
+          <div class="columns is-centered has-text-centered">
+            <div class="column is-full_width">
+              <h3>Visual comparison of the rendering image on the TartanAir-Shibuya datasets</h3>
+              <img src="projects/d4dgs/images/shibuya.png" class="center"/>
+              <div class="content has-text-justified">
+              </div>
+            </div>
+          </div>
+
+
+          <p>
+            &nbsp
+          </p>
+            <p>
+              &nbsp
+            </p>
+            <p>
+              &nbsp
+            </p>
+          <h3 class="title is-4">Tracking</h3>
+          <p>
+            &nbsp
+          </p>
+          <div class="container is-max-desktop">
+            <div class="columns is-centered has-text-centered">
+              <div class="column is-half">
+                <h3>Results of metric ATE RMSE on several dynamic scene sequences in bonn dataset. "∗" denotes the version reproduced by NICE-SLAM. "-" denotes the tracking failures. The metric unit is [cm].</h3>
+                <img src="projects/d4dgs/images/bonn_track.png" class="center"/>
+                <div class="content has-text-justified">
+                </div>
+              </div>
+            </div>
+    
+            <div class="container is-max-desktop">
+              <div class="columns is-centered has-text-centered">
+                <div class="column is-full_width">
+                  <h3>Camera tracking and mapping quality on several dynamic sequences in the Tartanair-Shibuya dataset.</h3>
+                  <img src="projects/d4dgs/images/shibuya_map_track.png" class="center"/>
+                  <div class="content has-text-justified">
+                  </div>
+                </div>
+              </div>
+              <div class="container is-max-desktop">
+                <div class="columns is-centered has-text-centered">
+                  <div class="column is-full_width">
+                    <h3>Map quality on several dynamic sequences in the BONN dataset.</h3>
+                    <img src="projects/d4dgs/images/bonn_map.png" class="center"/>
+                    <div class="content has-text-justified">
+                    </div>
+                  </div>
+                </div>
+</div>
+</div>
+</section>
+
+
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+    <pre><code>@inproceedings{sun2025d4dgsslam,
+      title={Embracing Dynamics: Dynamics-aware 4D Gaussian Splatting SLAM},
+      author={Zhicong Sun, Jacqueline Lo, Jinxing Hu},
+      journal={arXiv preprint arXiv:2504.04844},
+      year={2025}
+}</code></pre>
+  </div>
+</section>
+
+<section class="section" id="Acknowledgements">
+  <div class="container is-max-desktop content">
+    <h2 class="title">Acknowledgements</h2>
+    <p>
+      We acknowledge the funding from the Research Grants Council of Hong Kong, the Hong Kong Polytechnic University, and the Shenzhen Institutes of Advanced Technology of the Chinese Academy of Sciences.
+      Additionally, this work refer to many open-source codes, and we also thank the authors of the relaed work: 
+      <a href="https://github.com/graphdeco-inria/gaussian-splatting">3D Gaussian Splatting</a>, 
+      <a href="https://github.com/graphdeco-inria/diff-gaussian-rasterization">Differential Gaussian Rasterization</a>, 
+      <a href="https://github.com/fudan-zvg/4d-gaussian-splatting">4D Gaussian Splatting</a>, 
+      <a href="https://github.com/muskie82/MonoGS">Gaussian Splatting SLAM</a>, 
+      <a href="https://github.com/chiaki530/leapvo">LEAP-VO</a>, and 
+      <a href="https://github.com/spla-tam/SplaTAM">SplaTAM</a>.
+    </p>
+  </div>
+</section>
+
+
+<footer class="footer">
+  <div class="container">
+    <div class="content has-text-centered">
+    </div>
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            This website is licensed under a <a rel="license"
+                                                href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
+            Commons Attribution-ShareAlike 4.0 International License</a>.
+            This webpage template is from <a href="https://github.com/nerfies/nerfies.github.io">Nerfies</a>. 
+            We sincerely thank <a href="https://keunhong.com/">Keunhong Park</a> for developing and open-sourcing this template.
+          </p>
+        </div>
+      </div>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var video = document.getElementById('dollyzoom');
+    video.playbackRate = 2.0;  
+  });
+</script>
+
+</body>
+</html>
