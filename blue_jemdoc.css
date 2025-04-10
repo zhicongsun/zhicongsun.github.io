@@ -345,3 +345,19 @@ table.imgtable img {
 		margin: 0 auto;
 	}
 }
+/* 隐藏访客统计地图 */
+a[href*='clustrmaps.com'] {
+    display: none;
+    visibility: hidden;
+    opacity: 0;
+    height: 0;
+    width: 0;
+}
+
+a[href*='clustrmaps.com'] img {
+    display: none;
+    visibility: hidden;
+    opacity: 0;
+    height: 0;
+    width: 0;
+}
