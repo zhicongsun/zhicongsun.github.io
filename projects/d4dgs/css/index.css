@@ -161,15 +161,32 @@ body {
   border-radius: 5px;
 }
 
+/* 基础段落样式 */
 .column.is-four-fifths p {
     max-width: 100%;
     margin: 0 auto;
-    text-align: left;
+    text-align: justify !important;
     padding: 0 20px;
+    text-justify: inter-word !important;
+    hyphens: auto !important;
+    word-spacing: 0.1em !important;
 }
 
+/* 标题样式 */
 .column.is-four-fifths h2.title.is-3 {
     text-align: center;
+}
+
+/* 致谢和版权部分 */
+.column.is-four-fifths p:last-of-type,
+.column.is-four-fifths p:nth-last-of-type(2) {
+    text-align: justify !important;
+    text-justify: inter-word !important;
+    hyphens: auto !important;
+    word-spacing: 0.1em !important;
+    max-width: 100% !important;
+    margin: 0 auto !important;
+    padding: 0 20px !important;
 }
 
 /* 移动端响应式字体大小 */
@@ -218,5 +235,21 @@ body {
     .column.is-four-fifths p {
         max-width: 90%;
         padding: 0 10px;
+        text-align: justify !important;
+        text-justify: inter-word !important;
+        hyphens: auto !important;
+        word-spacing: 0.1em !important;
+    }
+
+    /* 确保致谢和版权部分在移动端也两端对齐 */
+    .column.is-four-fifths p:last-of-type,
+    .column.is-four-fifths p:nth-last-of-type(2) {
+        text-align: justify !important;
+        text-justify: inter-word !important;
+        hyphens: auto !important;
+        word-spacing: 0.1em !important;
+        max-width: 90% !important;
+        margin: 0 auto !important;
+        padding: 0 10px !important;
     }
 }
