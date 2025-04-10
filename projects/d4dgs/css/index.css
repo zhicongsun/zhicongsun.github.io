@@ -29,6 +29,15 @@ body {
 
 
 .publication-title {
+    font-family: 'Google Sans', sans-serif;
+}
+
+.publication-title.is-1 {
+    font-size: clamp(24px, 8vw, 48px);
+}
+
+.publication-title.is-2 {
+    font-size: clamp(20px, 6vw, 36px);
 }
 
 .publication-banner {
@@ -45,10 +54,6 @@ body {
 }
 
 .publication-header .hero-body {
-}
-
-.publication-title {
-    font-family: 'Google Sans', sans-serif;
 }
 
 .publication-authors {
@@ -169,8 +174,12 @@ body {
 
 /* 移动端响应式字体大小 */
 @media screen and (max-width: 700px) {
-    .publication-title {
-        font-size: clamp(20px, 6vw, 32px);
+    .publication-title.is-1 {
+        font-size: clamp(24px, 8vw, 48px);
+    }
+    
+    .publication-title.is-2 {
+        font-size: clamp(20px, 6vw, 36px);
     }
     
     .publication-authors {
