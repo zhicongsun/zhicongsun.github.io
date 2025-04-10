@@ -156,11 +156,15 @@ body {
   border-radius: 5px;
 }
 
-.column p {
-    max-width: 800px;
+.column.is-four-fifths p {
+    max-width: 100%;
     margin: 0 auto;
     text-align: left;
     padding: 0 20px;
+}
+
+.column.is-four-fifths h2.title.is-3 {
+    text-align: center;
 }
 
 /* 移动端响应式字体大小 */
@@ -202,7 +206,7 @@ body {
         font-size: clamp(12px, 3.5vw, 14px) !important;
     }
 
-    .column p {
+    .column.is-four-fifths p {
         max-width: 90%;
         padding: 0 10px;
     }
