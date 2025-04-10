@@ -498,6 +498,7 @@ a[href*='clustrmaps.com'] img {
 @media screen and (max-width: 700px) {
     #layout-content > table.imgtable:first-of-type {
         max-width: 300px;
+        animation: float 3s ease-in-out infinite;
     }
     
     #layout-content > table.imgtable:first-of-type td {
@@ -518,5 +519,39 @@ a[href*='clustrmaps.com'] img {
     
     #layout-content > table.imgtable:first-of-type + table.imgtable {
         max-width: 300px;
+        animation: float 3s ease-in-out infinite;
+        animation-delay: 0.5s;
     }
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+    100% {
+        transform: translateY(0px);
+    }
+}
+
+/* 为图片添加悬停效果 */
+table.imgtable img {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+table.imgtable img:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* 为链接添加悬停效果 */
+a {
+    transition: all 0.3s ease;
+}
+
+a:hover {
+    transform: translateY(-2px);
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
