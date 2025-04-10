@@ -21,6 +21,22 @@
         href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
   <link rel="stylesheet" href="./projects/d4dgs/css/index.css">
 
+  <style>
+    /* 隐藏访客统计地图 */
+    a[href*='clustrmaps.com'],
+    a[title*='ClustrMaps'],
+    img[src*='clustrmaps.com'] {
+      display: none !important;
+      visibility: hidden !important;
+      opacity: 0 !important;
+      height: 0 !important;
+      width: 0 !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      border: none !important;
+    }
+  </style>
+
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script defer src="./projects/d4dgs/js/fontawesome.all.min.js"></script>
   <script src="./projects/d4dgs/js/bulma-carousel.min.js"></script>
@@ -288,6 +304,9 @@
         </div>
       </div>
     </div>
+    <div style="text-align: center; margin-top: 30px; color: #666; font-size: 14px;">
+      &copy; 2025 Zhicong Sun. All rights reserved.
+  </div>
     <!-- 添加访客统计地图 -->
     <div class="columns is-centered" style="display: none;">
       <div class="column is-3 has-text-centered">
