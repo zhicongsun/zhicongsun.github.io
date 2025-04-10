@@ -498,7 +498,6 @@ a[href*='clustrmaps.com'] img {
 @media screen and (max-width: 700px) {
     #layout-content > table.imgtable:first-of-type {
         max-width: 300px;
-        animation: float 3s ease-in-out infinite;
     }
     
     #layout-content > table.imgtable:first-of-type td {
@@ -515,12 +514,18 @@ a[href*='clustrmaps.com'] img {
     
     #layout-content > table.imgtable:first-of-type td:nth-child(2) p {
         text-align: center;
+        font-size: clamp(14px, 4vw, 16px);
     }
     
     #layout-content > table.imgtable:first-of-type + table.imgtable {
         max-width: 300px;
-        animation: float 3s ease-in-out infinite;
-        animation-delay: 0.5s;
+        animation: float 4s ease-in-out infinite;
+        animation-delay: 0.3s;
+    }
+
+    #layout-content > table.imgtable:first-of-type td:nth-child(2) a {
+        font-size: clamp(12px, 3.5vw, 14px);
+        margin: 5px;
     }
 }
 
