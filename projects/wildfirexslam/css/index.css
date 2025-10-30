@@ -1,0 +1,255 @@
+body {
+  font-family: 'Noto Sans', sans-serif;
+}
+
+
+.footer .icon-link {
+    font-size: 25px;
+    color: #000;
+}
+
+.link-block a {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.dnerf {
+  font-variant: small-caps;
+}
+
+
+.teaser .hero-body {
+  padding-top: 0;
+  padding-bottom: 3rem;
+}
+
+.teaser {
+  font-family: 'Google Sans', sans-serif;
+}
+
+
+.publication-title {
+    font-family: 'Google Sans', sans-serif;
+}
+
+.publication-title.is-1 {
+    font-size: clamp(24px, 8vw, 48px);
+}
+
+.publication-title.is-2 {
+    font-size: clamp(20px, 6vw, 36px);
+}
+
+.publication-banner {
+  max-height: parent;
+
+}
+
+.publication-banner video {
+  position: relative;
+  left: auto;
+  top: auto;
+  transform: none;
+  object-fit: fit;
+}
+
+.publication-header .hero-body {
+}
+
+.publication-authors {
+    font-family: 'Google Sans', sans-serif;
+}
+
+.publication-venue {
+    color: #555;
+    width: fit-content;
+    font-weight: bold;
+}
+
+.publication-awards {
+    color: #ff3860;
+    width: fit-content;
+    font-weight: bolder;
+}
+
+.publication-authors {
+}
+
+.publication-authors a {
+   color: hsl(204, 86%, 53%) !important;
+}
+
+.publication-authors a:hover {
+    text-decoration: underline;
+}
+
+.author-block {
+  display: inline-block;
+}
+
+.publication-banner img {
+}
+
+.publication-authors {
+  /*color: #4286f4;*/
+}
+
+.publication-video {
+    position: relative;
+    width: 100%;
+    height: 0;
+    padding-bottom: 56.25%;
+
+    overflow: hidden;
+    border-radius: 10px !important;
+}
+
+.publication-video iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.publication-body img {
+}
+
+.results-carousel {
+  overflow: hidden;
+}
+
+.results-carousel .item {
+  margin: 5px;
+  overflow: hidden;
+  border: 1px solid #bbb;
+  border-radius: 10px;
+  padding: 0;
+  font-size: 0;
+}
+
+.results-carousel video {
+  margin: 0;
+}
+
+
+.interpolation-panel {
+  background: #f5f5f5;
+  border-radius: 10px;
+}
+
+.interpolation-panel .interpolation-image {
+  width: 100%;
+  border-radius: 5px;
+}
+
+.interpolation-video-column {
+}
+
+.interpolation-panel .slider {
+  margin: 0 !important;
+}
+
+.interpolation-panel .slider {
+  margin: 0 !important;
+}
+
+#interpolation-image-wrapper {
+  width: 100%;
+}
+#interpolation-image-wrapper img {
+  border-radius: 5px;
+}
+
+/* 基础段落样式 */
+.column.is-four-fifths p {
+    max-width: 100%;
+    margin: 0 auto;
+    text-align: justify !important;
+    padding: 0 20px;
+    text-justify: inter-word !important;
+    hyphens: auto !important;
+    word-spacing: 0.1em !important;
+}
+
+/* 标题样式 */
+.column.is-four-fifths h2.title.is-3 {
+    text-align: center;
+}
+
+/* 致谢和版权部分 */
+.column.is-four-fifths p:last-of-type,
+.column.is-four-fifths p:nth-last-of-type(2) {
+    text-align: justify !important;
+    text-justify: inter-word !important;
+    hyphens: auto !important;
+    word-spacing: 0.1em !important;
+    max-width: 100% !important;
+    margin: 0 auto !important;
+    padding: 0 20px !important;
+}
+
+/* 移动端响应式字体大小 */
+@media screen and (max-width: 700px) {
+    .publication-title.is-1 {
+        font-size: clamp(24px, 8vw, 48px);
+    }
+    
+    .publication-title.is-2 {
+        font-size: clamp(20px, 6vw, 36px);
+    }
+    
+    .publication-authors {
+        font-size: clamp(14px, 4vw, 16px);
+    }
+    
+    .publication-authors a {
+        font-size: clamp(14px, 4vw, 16px);
+    }
+    
+    .publication-venue {
+        font-size: clamp(14px, 4vw, 16px);
+    }
+    
+    .publication-awards {
+        font-size: clamp(14px, 4vw, 16px);
+    }
+    
+    .link-block a {
+        font-size: clamp(12px, 3.5vw, 14px);
+        margin: 3px;
+    }
+    
+    .is-size-6 {
+        font-size: clamp(12px, 3.5vw, 14px) !important;
+    }
+    
+    .is-size-5 {
+        font-size: clamp(14px, 4vw, 16px) !important;
+    }
+    
+    .button {
+        font-size: clamp(12px, 3.5vw, 14px) !important;
+    }
+
+    .column.is-four-fifths p {
+        max-width: 90%;
+        padding: 0 10px;
+        text-align: justify !important;
+        text-justify: inter-word !important;
+        hyphens: auto !important;
+        word-spacing: 0.1em !important;
+    }
+
+    /* 确保致谢和版权部分在移动端也两端对齐 */
+    .column.is-four-fifths p:last-of-type,
+    .column.is-four-fifths p:nth-last-of-type(2) {
+        text-align: justify !important;
+        text-justify: inter-word !important;
+        hyphens: auto !important;
+        word-spacing: 0.1em !important;
+        max-width: 90% !important;
+        margin: 0 auto !important;
+        padding: 0 10px !important;
+    }
+}

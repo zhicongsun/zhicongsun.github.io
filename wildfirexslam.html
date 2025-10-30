@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="WildfireX-SLAM: A Large-scale Low-altitude
+        RGB-D Dataset for Wildfire SLAM and Beyond">
+  <meta name="keywords" content="D4DGS-SLAM">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>D4DGS-SLAM</title>
+
+
+
+<link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./projects/wildfirexslam/css/bulma.min.css">
+  <link rel="stylesheet" href="./projects/wildfirexslam/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./projects/wildfirexslam/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./projects/wildfirexslam/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./projects/wildfirexslam/css/index.css">
+
+  <style>
+    /* 隐藏访客统计地图 */
+    a[href*='clustrmaps.com'],
+    a[title*='ClustrMaps'],
+    img[src*='clustrmaps.com'] {
+      display: none !important;
+      visibility: hidden !important;
+      opacity: 0 !important;
+      height: 0 !important;
+      width: 0 !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      border: none !important;
+    }
+  </style>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./projects/wildfirexslam/js/fontawesome.all.min.js"></script>
+  <script src="./projects/wildfirexslam/js/bulma-carousel.min.js"></script>
+  <script src="./projects/wildfirexslam/js/bulma-slider.min.js"></script>
+  <script src="./projects/wildfirexslam/js/index.js"></script>
+</head>
+<body>
+
+
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">WildfireX-SLAM:</h1>
+          <h1 class="title is-1 publication-title">A Large-scale Low-altitude
+            RGB-D Dataset for Wildfire SLAM and Beyond
+	  <h1 class="title is-4 publlication-title">MMM 2026</h1>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <a href="https://zhicongsun.github.io/">Zhicong Sun</a><sup>1</sup></span>&nbsp;&nbsp;&nbsp;&nbsp;
+              <span class="author-block">
+                <a href="">Jinxing Hu</a><sup>2*</sup></span>&nbsp;&nbsp;&nbsp;&nbsp;
+              <span class="author-block">
+              <a href="">Jacqueline Lo</a><sup>1*</sup>&nbsp;&nbsp;&nbsp;&nbsp;
+            </span>
+            
+          </div>
+          <div class="column is-full_width">
+            <h2 class="is-size-6">* Corresponding Authors</h2>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><sup>1</sup>Hong Kong Polytechnic University</span>&nbsp;&nbsp;
+            <span class="author-block"><sup>2</sup>Shenzhen Institutes of Advanced Technology, Chinese Academy of Sciences</span>&nbsp;&nbsp;
+          </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <span class="link-block">
+                <a href="https://arxiv.org/abs/2504.04844" target="_blank"
+                   class="button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Paper (Coming Soon)</span>
+                </a>
+              </span>
+               <span class="link-block">
+                <a href="./projects/wildfirexslam/poster.pdf" target="_blank" download
+		   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span >Code and Dataset (Coming Soon)</span>
+                  </a>
+              </span> 
+            </div>
+          </div>
+        </div>
+    </div>
+  </div>
+<!-- </section> -->
+
+
+<!-- <section class="section"> -->
+  <div class="container is-max-desktop">
+        <!-- Paper video. -->
+        <div class="columns is-centered has-text-centered">
+          <div class="column is-four-fifths">
+            <!-- <h2 class="title is-3">Video</h2> -->
+            <div class="publication-video">
+              <video id="dollyzoom" autoplay controls muted loop height="100%" playbackRate="2.0">
+                <source src="./projects/wildfirexslam/videos/intro.mp4" type="video/mp4">
+              </video>
+            </div>
+          </div>
+        </div>
+        <!--/ Paper video. -->
+      
+    <br>
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            3D Gaussian splatting (3DGS) and its subsequent variants
+have led to remarkable progress in simultaneous localization and mapping (SLAM). While most recent 3DGS-based SLAM works focus on
+small-scale indoor scenes, developing 3DGS-based SLAM methods for
+large-scale forest scenes holds great potential for many real-world applications, especially for wildfire emergency response and forest management. However, this line of research is impeded by the absence of a
+comprehensive and high-quality dataset, and collecting such a dataset
+over real-world scenes is costly and technically infeasible. To this end,
+we have built a large-scale, comprehensive, and high-quality synthetic
+dataset for SLAM in wildfire and forest environments. Leveraging the
+Unreal Engine 5 Electric Dreams Environment Sample Project, we developed a pipeline to easily collect aerial and ground views, including
+ground-truth camera poses and a range of additional data modalities
+from unmanned aerial vehicle. Our pipeline also provides flexible controls on environmental factors such as light, weather, and types and conditions of wildfire, supporting the need for various tasks covering forest
+mapping, wildfire emergency response, and beyond. The resulting pilot
+dataset, WildfireX-SLAM, contains 5.5k low-altitude RGB-D aerial images from a large-scale forest map with a total size of 16 km². On top
+of WildfireX-SLAM, a thorough benchmark is also conducted, which not
+only reveals the unique challenges of 3DGS-based SLAM in the forest but
+also highlights potential improvements for future works. The dataset and
+code will be publicly available.
+          </p>
+        </div>
+      </div>
+    </div>
+    <!--/ Abstract. -->
+  </div>
+</section>
+
+
+
+
+<footer class="footer">
+  <div class="container">
+    <div class="content has-text-centered">
+    </div>
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content has-text-justified">
+          <p>
+            This website is licensed under a <a rel="license"
+                                                href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
+            Commons Attribution-ShareAlike 4.0 International License</a>.
+            This webpage template is from <a href="https://github.com/nerfies/nerfies.github.io">Nerfies</a>. 
+            We sincerely thank <a href="https://keunhong.com/">Keunhong Park</a> for developing and open-sourcing this template.
+          </p>
+        </div>
+      </div>
+    </div>
+    <div style="text-align: center; margin-top: 30px; color: #666; font-size: 14px;">
+      &copy; 2025 Zhicong Sun. All rights reserved.
+    </div>
+    <!-- 添加访客统计地图 -->
+    <div class="columns is-centered" style="display: none;">
+      <div class="column is-3 has-text-centered">
+        <a href="https://clustrmaps.com/site/1c5e9" title="ClustrMaps">
+          <img src="//www.clustrmaps.com/map_v2.png?d=lrhHkw37oj7lEdFXpI6fnTvg82h9jRMMHjNDrU-AUJA&cl=ffffff" />
+        </a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var video = document.getElementById('dollyzoom');
+    video.playbackRate = 2.0;  
+  });
+</script>
+
+
+</body>
+</html>
