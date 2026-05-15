@@ -1,337 +1,590 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
-  "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<meta name="generator" content="jemdoc, see http://jemdoc.jaboc.net/" />
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<link rel="stylesheet" href="blue_jemdoc.css" type="text/css" />
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Zhicong Sun (Zeeco)</title>
+<link rel="shortcut icon" href="favicon.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@500;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" />
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    darkMode: 'class',
+    theme: {
+      extend: {
+        fontFamily: {
+          sans: ['Roboto', 'system-ui', 'sans-serif'],
+          slab: ['"Roboto Slab"', 'Georgia', 'serif'],
+        },
+      },
+    },
+  };
+</script>
+<style>
+  /* ============================================================
+     ACCENT COLOR — change ONE line to re-theme the whole site.
+     Try the alternatives in the comments below.
+     ============================================================ */
+  :root {
+    --accent: #b509ac;      /* al-folio magenta (default) */
+    --accent-hover: #7a0673;
+    /* --accent: #1f3a8a; --accent-hover: #142454;  // deep blue (Karpathy/MIT) */
+    /* --accent: #0d6e6e; --accent-hover: #074a4a;  // academic teal (Lilian Weng) */
+    /* --accent: #a4022d; --accent-hover: #6e0020;  // PolyU red */
+    /* --accent: #c1502e; --accent-hover: #8c361c;  // burnt orange (Princeton-ish) */
+    /* --accent: #4f46e5; --accent-hover: #3730a3;  // indigo (modern SaaS) */
+    /* --accent: #111827; --accent-hover: #374151;  // mono (Jon Barron minimal) */
+  }
 
-<!-- Meta -->
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="">
-<meta name="author" content="">    
-<link rel="shortcut icon" href="favicon.png">  
-<title>Zhicong SUN</title>
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Roboto', system-ui, sans-serif; }
+  h1, h2, h3, .slab { font-family: 'Roboto Slab', Georgia, serif; }
+
+  a.link { color: var(--accent); transition: color .15s ease; }
+  a.link:hover { color: var(--accent-hover); text-decoration: underline; }
+  .hover-accent:hover { color: var(--accent); }
+  .hover-accent-border:hover { border-color: var(--accent); color: var(--accent); }
+
+  .news-scroll { max-height: 240px; overflow-y: auto; }
+  .news-scroll::-webkit-scrollbar { width: 6px; }
+  .news-scroll::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 3px; }
+  .dark .news-scroll::-webkit-scrollbar-thumb { background: #4b5563; }
+
+  .pub-card { transition: transform .15s ease, box-shadow .15s ease; }
+  .pub-card:hover { transform: translateY(-2px); }
+
+  .badge { display: inline-block; padding: 1px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; letter-spacing: .02em; }
+
+  /* video teaser */
+  .teaser-video { width: 100%; height: 100%; object-fit: cover; }
+
+  /* details/summary */
+  details summary { cursor: pointer; list-style: none; }
+  details summary::-webkit-details-marker { display: none; }
+  details[open] summary .chev { transform: rotate(90deg); }
+  .chev { display: inline-block; transition: transform .15s ease; }
+
+  /* bibtex toggle */
+  .bib-toggle { cursor: pointer; font: inherit; }
+  .bib-toggle.is-open { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .bib-block pre {
+    font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+    font-size: 12px;
+    line-height: 1.55;
+    white-space: pre;
+    overflow-x: auto;
+  }
+  .bib-copy { font: inherit; cursor: pointer; }
+</style>
 </head>
-<body>
-<table summary="Table for page layout." id="tlayout">
-<tr valign="top">
-<!-- <td id="layout-menu">
-<div class="menu-item"><a href="index.html" class="current">Home</a></div>
-<div class="menu-item"><a href="research.html">Research</a></div>
-<div class="menu-item"><a href="teaching.html">Teaching</a></div>
-<div class="menu-item"><a href="projects.html">Projects</a></div>
-<div class="menu-item"><a href="work.html">Work</a></div>
-<div class="menu-item"><a href="leadership.html">Leadership</a></div>
-<div class="menu-item"><a href="others.html">My&nbsp;Life</a></div>
-</td> -->
-<td id="layout-content">
-<div id="toptitle">
-<h1 style="text-align: center;">Zhicong Sun</h1>
-</div>
-<table class="imgtable"><tr><td>
-<a href="index.html"><img src="./images/szc.jpg" alt="profile pic" width="128px" height="161px" /></a>&nbsp;</td>
-<td align="left"><p>Updated Sept, 2025.<br />
-E-mail: <a href="mailto:zhicong.sun@connect.polyu.hk" target=&ldquo;blank&rdquo;>zhicong.sun@connect.polyu.hk</a><br />
-<a href="https://scholar.google.com/citations?user=gGSRoKAAAAAJ&hl=zh-CN" target=&ldquo;blank&rdquo;>Google Scholar;</a>
-<a href="https://www.researchgate.net/profile/Zhicong-Sun-2" target=&ldquo;blank&rdquo;>ResearchGate;</a><br />
-<a href="https://zhicongsun.github.io/files/CV.pdf" target=&ldquo;blank&rdquo;>CV;</a>
-<a href="https://zhicongsun.github.io/files/Research_Statement.pdf" target=&ldquo;blank&rdquo;>Research Statement;</a><br />
-<a href="https://github.com/zhicongsun" target=&ldquo;blank&rdquo;>Github;</a>
-<a href="https://www.linkedin.com/in/zhicongsun/" target=&ldquo;blank&rdquo;>Linkedin;</a>
-</td>
-</td>
-<td align="right">
-<img src="./images/remember1.png" alt="remember1" width="250px" height="55px" /><br />
-<img src="./images/remember2.png" alt="remember2" width="211px" height="100px" />
-</td>
-</tr></table>
-<h2>Research Interests</h2>
-<ul>
-<li><p>Robotic Perception, Reasoning, and Planning
-</p>
-</li>
-<li><p>Cyber-Physical Systems and their Safety &amp; Security
-</p>
-</li>
-</ul>
-<h2>Recent Publications</h2>
-<ul>
-<li><p><b>Robotic Perception, Reasoning, and Planning</b>
-</p>
-</li>
-</ul>
-<ol>
-<li><p>[IEEE-IROS'25] <u>Zhicong Sun</u>, Jinxing Hu, and Jacqueline Lo, &ldquo;Embracing Dynamics: Dynamics-aware 4D Gaussian Splatting SLAM&rdquo;, IEEE/RSJ International Conference on Intelligent Robots and Systems, Oral. <a href="https://arxiv.org/abs/2504.04844" target=&ldquo;blank&rdquo;>(PDF)</a> 
-</p>
-</li>
-<li><p>[MMM'26] <u>Zhicong Sun</u>, Jinxing Hu, and Jacqueline Lo, &ldquo;WildfireX-SLAM: A Large-scale Low-altitude RGB-D Dataset for Wildfire SLAM and Beyond&rdquo;, 32nd International Conference on
-  Multimedia Modeling, Oral. <a href="https://arxiv.org/abs/2510.27133" target=&ldquo;blank&rdquo;>(PDF)</a>
-</p>
-</li>
-</ol>
-<ul>
-<li><p><b>Cyber-Physical Systems</b>
-</p>
-</li>
-</ul>
-<ol>
-<li><p>[IEEE-IoTJ'23] <u>Zhicong Sun</u>, Yulong Ding, Shuang-Hua Yang, &ldquo;Contradictions Identification of Safety and Security Requirements for Industrial Cyber-Physical Systems&rdquo;, IEEE Internet of Things Journal, 13 November 2023, <a href="https://ieeexplore.ieee.org/document/10314997" target=&ldquo;blank&rdquo;>Doi: 10.1109/JIOT.2023.3332128</a>. <a href="https://zhicongsun.github.io/papers/journal/10.1109.JIOT.2023.3296538.pdf" target=&ldquo;blank&rdquo;>(PDF)</a> <b>(A 26-page long article)</b>
-</p>
-</li>
-<li><p>[IET-CPS'24] <u>Zhicong Sun</u>, Guang Cheng, Yulong Ding, Shuang-Hua Yang, &ldquo;Joint safety and security risk analysis in industrial cyber-physical systems: A survey&rdquo;, IET Cyber-Physical Systems: Theory & Applications, 14 June 2024, <a href="https://ietresearch.onlinelibrary.wiley.com/doi/10.1049/cps2.12095" target=&ldquo;blank&rdquo;>Doi: 10.1049/cps2.12095</a>. <a href="https://ietresearch.onlinelibrary.wiley.com/doi/epdf/10.1049/cps2.12095" target=&ldquo;blank&rdquo;>(PDF)</a>
-</p>
-</li>
-<li><p>[INFOCOM'24] Xinchen Zhang and Running Zhao, Zhihan Jiang, <u>Zhicong Sun</u>, Yulong Ding, Edith C.-H. Ngai, Shuang-Hua Yang, &ldquo;AOC-IDS: Autonomous Online Framework with Contrastive Learning for Intrusion Detection&rdquo;, <a href="https://doi.org/10.1109/INFOCOM52122.2024.10621346" target=&ldquo;blank&rdquo;>Doi: 10.1109/INFOCOM52122.2024.10621346</a>. <a href="https://arxiv.org/abs/2402.01807" target=&ldquo;blank&rdquo;>(PDF)</a>
-</p>
-</li>
-<li><p>[IEEE-TCYB'24] Guang Chen and <u>Zhicong Sun</u>(co-first authors), Yulong Ding, Shuang-Hua Yang, &ldquo;Risk Assessment for Cyber-Physical Systems under Stealth Attacks&rdquo;, IEEE Transactions on Systems, Man, and Cybernetics: Systems, Under Review. <a href="https://arxiv.org/abs/2405.02633" target=&ldquo;blank&rdquo;>(PDF)</a>
-</p>
-<li><p>[IEEE-TDSC'24] Xinchen Zhang and Running Zhao, <u>Zhicong Sun</u>, Zhihan Jiang, Yulong Ding, Edith C.-H. Ngai, Shuang-Hua Yang,, &ldquo;Online Contrastive Learning for Autonomous Network Intrusion Detection&rdquo;, IEEE Transactions on Dependable and Secure Computing, Under Review.
-</p>
-</li>
-</ol>
-<h2>Education</h2>
-<ul>
-<li><p>Hong Kong Polytechnic University<br />
-<i> Ph.D. </i> | Robotics and CEE, Sept 2023 - July 2026<br />
-Supervisors and Co-advisors:  <a href="https://www.polyu.edu.hk/cee/people/academic-staff/dr-jacqueline-lo/" target=&ldquo;blank&rdquo;>Prof. Jacqueline LO</a>, <a href="https://scholar.google.com/citations?user=0KRmwWIAAAAJ&hl=en" target=&ldquo;blank&rdquo;>Prof. Anthony Chen</a>, Prof. Siu-Ming Lo, Prof. Jinxing Hu.
-</p>
-</li>
-</ul>
-<ul>
-<li><p>Southern University of Science and Technology, China<br />
-<i>M.Eng.</i> | Computer Science and Cyber-Physical Systems, Sept 2020 - Jun 2023<br />
-Supervisors:  <a href="https://www.reading.ac.uk/computer-science/staff/professor-shuang-hua-yang" target=&ldquo;blank&rdquo;>Prof. Shuang-Hua Yang</a> and <a href="https://faculty.sustech.edu.cn/dingyl/en/" target=&ldquo;blank&rdquo;>Prof. Yulong Ding</a>
-</p>
-</li>
-</ul>
-<ul>
-<li><p>Harbin Institute of Technology, China<br />
-<i>B.Eng.</i> | Communication Engineering, Sept 2016 - Jun 2020<br />
-Supervisor: <a href="http://homepage.hit.edu.cn/yuchangjun?lang=en" target=&ldquo;blank&rdquo;>Prof. Changjun Yu</a>
-</p>
-</li>
-</ul>
-<h2>Services</h2>
-<ul>
-<li><p>Reviewer of the Archives of Computational Methods in Engineering (JCR Q1, IF 9.9), Springer.<br />
-</p>
-</li>
-<li><p>Reviewer of the IEEE Internet of Things Journal (JCR Q1, IF 9), IEEE. <br />
-</p>
-</li>
-<li><p>Reviewer of the IEEE International Conference on Computer Vision (ICCV, CCF A), IEEE.<br />
-</p>
-</li>
-<li><p>Reviewer of the IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS, CCF C), IEEE.<br />
-</p>
-</li>
-<li><p>Reviewer of the International Conference on Multimedia Modeling (MMM).<br />
-</p>
-</li>
-</ul>
-<h2>Awards</h2>
-<ul>
-<li><p>Second Prize in Preliminary Contest of Business Plan of the 15th China Graduate Electronic Design Contest, 2020 (<i>First Author</i>).
-</p>
-</li>
-<li><p>Second Prize in the South China Division of the 15th China Graduate Electronic Design Contest, 2020 (<i>Second Author</i>).
-</p>
-</li>
-<li><p>Second Prize in the Final Tournament of the 18th RoboMaster University Championship, China University Robot Competition, 2019 (<i>First Author</i>).
-</p>
-</li>
-<li><p>Grand Prize in the North China Division of the 18th Robomaster University Technical Challenge, 2019 (<i>First Author</i>).
-</p>
-</li>
-<li><p>First Prize in the Northern Division of the 18th RoboMaster University Championship, China University Robot Competition, 2019 (<i>First Author</i>).
-</p>
-</li>
-<li><p>Participation Award in ICRA RoboMaster AI Challenge, 2019 (<i>Member</i>).
-</p>
-</li>
-<li><p>Grand Prize in the 7th China Marine Vehicle Design and Construction Contest, 2018 (<i>First Author</i>).
-</p>
-</li>
-<li><p>Third Prize in the University Student Science and Technology Innovation Competition, Shandong, 2018 (<i>Second Author</i>).
-</p>
-</li>
-<li><p>Third Prize in the Northern Division of the 17th RoboMaster University Championship, China University Robot Competition, 2018 (<i>First Author</i>).
-</p>
-</li>
-<li><p>First Prize in the HITwh Internal Contest of the Shandong Science and Technology Innovation Competition, 2018 (<i>Second Author</i>).
-</p>
-</li>
-<li><p>Second Prize in the 1st HITwh Headmaster Cup Science and Technology Contest, 2018 (<i>First Author</i>).
-</p>
-</li>
-<li><p>First Prize of the HITwh Artificial Intelligence and Intelligent Hardware Contest, 2018 (<i>First Author</i>).
-</p>
-</li>
-</ul>
-<h2>Honors</h2>
-<ul>
-<li><p><b>Top 10 Influential Graduate</b>, 2020. (Ranking 2nd, awarded with scholarship, with a selection ratio of 10/2368, at HITwh) 
-</p>
-</li>
-<li><p>Outstanding Scientific and Technological Innovation Individual of the School of Information Science and Engineering, 2019.
-</p>
-</li>
-<li><p>Science and Technology Innovation Scholarship, 2019, 2018, 2017.   
-</p>
-</li>
-<li><p>Outstanding Communist Party Member of the School of Information Science and Engineering, 2018.
-</p>
-</li>
-<li><p>Excellent Volunteer, 2018.
-</p>
-</li>
-<li><p>Social Work Scholarship, 2017.
-</p>
-</li>
-<li><p>Sports Excellence Scholarship, 2017.
-</p>
-</li>
-</ul>
-<h2>Research Experiences</h2>
-<ul>
-<li><p>Simultaneous Localization and Mapping in Dynamic Large-scale Outdoor Environments<br />
-<i>Main Researcher</i> | PolyU, Sept 2023 - Now <br />
-</p>
-</li>
-</ul>
-<ul>
-<li><p>Identification and Resolution of Contradictions between Safety and Security (S&amp;S) in Intelligent Connected Vehicle (ICV)<br />
-<i>Main Researcher</i> | SUSTech, Sept 2022 - Jun 2023<br />
-Supported by Huawei Trustworthy Intelligent Systems Laboratory.
-</p>
-</li>
-</ul>
-<ul>
-<li><p>Dealing with Security and Safety (S&amp;S) Contradictions for Industrial Cyber-Physical Systems<br />
-<i>Main Researcher</i> | SUSTech, Sept 2021 - Jun 2023<br />
-Supported by the National Natural Science Foundation of China, Grant Number: 61873119 and Shenzhen Key Laboratory of Safety and Security for Next Generation of Industrial Internet.
-</p>
-</li>
-</ul>
-<ul>
-<li><p>Joint Safety and Security Risk Analysis in Industrial Cyber-Physical Systems (iCPSs)<br />
-<i>Main Researcher</i> | SUSTech, Sept 2021 - Jun 2023<br />
-Supported by the National Natural Science Foundation of China, Grant Number: 61873119 and Shenzhen Key Laboratory of Safety and Security for Next Generation of Industrial Internet.
-</p>
-</li>
-</ul>
-<ul>
-<li><p>Direction Estimation of Ionospheric Echo based on High-Frequency Ground Wave Radar<br />
-<i>Main Researcher</i> | HIT, Jan 2020 - May 2020<br />
-Supported by the National Natural Science Foundation of China, Grant Number: 61971159 and Institute of Electronic Engineering Technology, HIT.
-</p>
-</li>
-</ul>
-<h2>Project Experiences</h2>
-<ul>
-<li><p>Simple Covariance Matrix Self-Adaptation Evolution Strategy with Repelling Subpopulations <a href="https://github.com/zhicongsun/SUSTech-EC2021-A3/blob/main/report.pdf" target=&ldquo;blank&rdquo;>[report]</a><br />
-<i>Main Researcher</i> | SUSTech, May 2021, Advisor: <a href="https://cse.sustech.edu.cn/faculty/~xiny/" target=&ldquo;blank&rdquo;>Prof. Xin Yao</a>
-</p>
-</li>
-</ul>
-<ul>
-<li><p>Optimization of the initialization of item grouping under the BIGO model <a href="https://github.com/zhicongsun/SUSTech-EC2021-A2/blob/main/report.pdf" target=&ldquo;blank&rdquo;>[report]</a><br />
-<i>Main Researcher</i> | SUSTech, Apr 2021, Advisor: <a href="https://cse.sustech.edu.cn/faculty/~xiny/" target=&ldquo;blank&rdquo;>Prof. Xin Yao</a>
-</p>
-</li>
-</ul>
-<ul>
-<li><p>Optimization of the convergence speed and the local search ability of the IFEP algorithm <a href="https://github.com/zhicongsun/SUSTech-EC2021-A1/blob/main/report.pdf" target=&ldquo;blank&rdquo;>[report]</a><br />
-<i>Main Researcher</i> | SUSTech, Mar 2021, Advisor: <a href="https://cse.sustech.edu.cn/faculty/~xiny/" target=&ldquo;blank&rdquo;>Prof. Xin Yao</a>
-</p>
-</li>
-</ul>
-<ul>
-<li><p>Electronic Control of Robots in <a href="https://www.robomaster.com/en-US" target=&ldquo;blank&rdquo;>Robomaster</a> (China University Robot Competition)<br />
-<i>Head of the Electronic Control Group</i> | HIT, Aug 2017 - Aug 2019
-</p>
-</li>
-</ul>
-<h2>Teaching Experiences</h2>
-<ul>
-<li><p>CS324 Internet of Things<br />
-<i>Teaching Assistant</i> | SUSTech, Spring 2022
-</p>
-</li>
-</ul>
-<ul>
-<li><p>CSE1BN01 Transport and Society<br />
-<i>Teaching Assistant</i> | PolyU, Spring 2025
-</p>
-</li>
-</ul>
-<h2>Work Experiences</h2>
-<ul>
-<li><p>Huawei Hong Kong Research Center<br />
-<i>Researcher Intern</i> | 2012 Theory Lab, Apr 2024 -  Jun 2024<br />
-</p>
-</li>
-</ul>
-<ul>
-<li><p>Standard Robots, Shenzhen, Co., Ltd <br />
-<i>Project Intern</i> | Electronic Control Group, Jul 2020 - Aug 2020<br />
-</p>
-</li>
-</ul>
-<ul>
-<li><p>ZTE Corporation<br />
-<i>Project Intern</i> | Wireless Communication Group, Asia Pacific Training Base, Yantai, Jan 2020 -  Feb 2020<br />
-</p>
-</li>
-</ul>
-<h2>Leadership &amp; Activities</h2>
-<ul>
-<li><p>HIT Robot Contest Team (HRCT)<br />
-<i>Head of the Electronic Control Group</i> | HIT, Aug 2017 - May 2018<br />
-<i>Vice Captain &amp; Head of the Electronic Control Group</i> | HIT, Jun 2018 - Aug 2019
-</p>
-</li>
-</ul>
-<ul>
-<li><p>Maker Space<br />
-<i>Head of the Lab</i> | HIT, Sept 2017 - Feb 2018<br />
-</p>
-</li>
-</ul>
-<h2>Languages &amp; Skills</h2>
-<ul>
-<li><p>Languages: Chinese (native), English (fluent, TOFEL: 101).
-</p>
-</li>
-<li><p>Programming: Python, Matlab, C/C<tt></tt>, Java.
-</p>
-</li>
-<li><p>Others: Machine Learning, Evolutionary Computation, Embedded System Development, ROS.
-</p>
-</li>
-</ul>
-<h2>Talks &amp; Reports on me</h2>
-<ul>
-<li><p>Talk as one of Top 10 Most Influential Graduate. <a href="https://mp.weixin.qq.com/s/CMzYF2d4FXcgfnUEdhIqkA" target=&ldquo;blank&rdquo;>[link 1]</a> <a href="https://mp.weixin.qq.com/s/tvEEqWTo3SyE23xo-E9pPw" target=&ldquo;blank&rdquo;>[link 2]</a> <a href="https://mp.weixin.qq.com/s/dBgY1mKbJVFI0nwAWlGnFA" target=&ldquo;blank&rdquo;>[link 3]</a>
-</p>
-</li>
-<li><p>Talk about my experience in science and innovation in HIT. <a href="https://mp.weixin.qq.com/s/YLwXERT7zHZARcgPDT3_gA" target=&ldquo;blank&rdquo;>[link]</a>
-</p>
-</li>
-</ul>
-<div style="text-align: center; margin-top: 30px;">
-<a href='https://clustrmaps.com/site/1bqn7'  title='Visit tracker'><img src='//clustrmaps.com/map_v2.png?cl=ffffff&w=251&t=tt&d=EJ36OnHiMpvk1484U4QTW35k_sts08FJslM08SpBTE8&co=353535&ct=edeaea'/></a>
-</div>
-<div style="text-align: center; margin-top: 30px; color: #666; font-size: 14px;">
-    &copy; 2025 Zhicong Sun. All rights reserved.
-</div>
-</div>
-</td>
-</tr>
-</table>
+<body class="bg-white text-gray-800 dark:bg-gray-900 dark:text-gray-200 transition-colors">
+
+<!-- Top nav -->
+<nav class="sticky top-0 z-30 backdrop-blur bg-white/80 dark:bg-gray-900/80 border-b border-gray-200 dark:border-gray-800">
+  <div class="max-w-5xl mx-auto px-6 py-3 flex items-center justify-between">
+    <a href="#" class="slab font-bold text-lg tracking-tight">zhicong sun</a>
+    <div class="flex items-center gap-5 text-sm">
+      <a href="#about" class="hover-accent">about</a>
+      <a href="#news" class="hover-accent">news</a>
+      <a href="#publications" class="hover-accent">publications</a>
+      <a href="#cv" class="hover-accent">cv</a>
+      <a href="#awards" class="hover-accent">awards</a>
+      <button id="theme-toggle" aria-label="toggle theme" class="ml-2 text-lg">
+        <i class="bi bi-moon-stars"></i>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<main class="max-w-5xl mx-auto px-6 py-12">
+
+  <!-- About / Hero -->
+  <section id="about" class="grid md:grid-cols-3 gap-10 items-start mb-16">
+    <div class="md:col-span-2 order-2 md:order-1">
+      <h1 class="text-4xl font-bold tracking-tight mb-2">Zhicong Sun <span class="text-gray-500 font-normal text-2xl">(Zeeco)</span> <span class="text-gray-400 font-light text-2xl">孙智聪</span></h1>
+      <p class="text-gray-500 dark:text-gray-400 mb-5">PhD Candidate, PolyU · Incoming Postdoc, <a class="link" href="https://disclab.pantoja-rosero.com/" target="_blank">NTU DISC Lab</a></p>
+      <p class="text-[15px] leading-relaxed mb-4">
+        I am a final-year PhD candidate at <a class="link" href="https://www.polyu.edu.hk/" target="_blank">PolyU</a>, advised by
+        <a class="link" href="https://www.polyu.edu.hk/cee/people/academic-staff/dr-jacqueline-lo/" target="_blank">Prof. Jacqueline Lo</a>,
+        <a class="link" href="https://scholar.google.com/citations?user=0KRmwWIAAAAJ" target="_blank">Prof. Anthony Chen</a>, Prof. Siu-Ming Lo, and Prof. Jinxing Hu.
+      </p>
+      <p class="text-[15px] leading-relaxed mb-4">
+        My research focuses on <b>robotic perception, reasoning, and planning</b> in dynamic, unstructured environments and their applications to safety-critical scenarios such as wildfire response. I also work on the <b>safety &amp; security of cyber-physical systems</b>.
+      </p>
+      <p class="text-[15px] leading-relaxed mb-6">
+        Previously, I received my M.Eng. from <a class="link" href="https://www.sustech.edu.cn/" target="_blank">SUSTech</a> (advised by <a class="link" href="https://scholar.google.com/citations?hl=zh-CN&user=7HXwJqEAAAAJ&view_op=list_works&sortby=pubdate" target="_blank">Prof. Shuang-Hua Yang</a> and Prof. Yulong Ding), and my B.Eng. from <a class="link" href="https://en.hitwh.edu.cn/" target="_blank">HIT</a> (advised by <a class="link" href="https://homepage.hit.edu.cn/yuchangjun?lang=zh" target="_blank">Prof. Changjun Yu</a>).
+      </p>
+
+      <!-- Social icons -->
+      <div class="flex items-center gap-4 text-xl text-gray-600 dark:text-gray-300">
+        <a href="mailto:zhicong.sun@connect.polyu.hk" title="Email" class="hover-accent"><i class="bi bi-envelope-fill"></i></a>
+        <a href="https://scholar.google.com/citations?user=gGSRoKAAAAAJ" target="_blank" title="Google Scholar" class="hover-accent"><i class="bi bi-mortarboard-fill"></i></a>
+        <a href="https://github.com/zhicongsun" target="_blank" title="GitHub" class="hover-accent"><i class="bi bi-github"></i></a>
+        <a href="https://www.linkedin.com/in/zhicongsun/" target="_blank" title="LinkedIn" class="hover-accent"><i class="bi bi-linkedin"></i></a>
+        <a href="https://www.researchgate.net/profile/Zhicong-Sun-2" target="_blank" title="ResearchGate" class="hover-accent"><i class="bi bi-journal-text"></i></a>
+      </div>
+    </div>
+
+    <div class="order-1 md:order-2 flex md:justify-end">
+      <div class="relative">
+        <img src="./images/szc.jpg" alt="Zhicong Sun" class="w-44 h-44 md:w-52 md:h-52 object-cover rounded-full shadow-lg ring-4 ring-white dark:ring-gray-800" />
+      </div>
+    </div>
+  </section>
+
+  <!-- News -->
+  <section id="news" class="mb-16">
+    <h2 class="slab text-2xl font-bold mb-5 border-b border-gray-200 dark:border-gray-800 pb-2">news</h2>
+    <div class="news-scroll pr-2">
+      <ul class="text-[15px] leading-relaxed space-y-2.5">
+        <li class="flex gap-4">
+          <span class="text-gray-400 dark:text-gray-500 w-24 shrink-0 font-mono text-sm">May 2026</span>
+          <span>Excited to share that I will join <a class="link" href="https://disclab.pantoja-rosero.com/" target="_blank">NTU DISC Lab</a> as a <b>Postdoctoral Researcher</b>, working with Prof. Bryan G. Pantoja-Rosero.</span>
+        </li>
+        <li class="flex gap-4">
+          <span class="text-gray-400 dark:text-gray-500 w-24 shrink-0 font-mono text-sm">Oct 2025</span>
+          <span><b>WildfireX-SLAM</b> accepted to <b>MMM 2026</b> as <span class="badge bg-amber-100 text-amber-800">Oral</span>.</span>
+        </li>
+        <li class="flex gap-4">
+          <span class="text-gray-400 dark:text-gray-500 w-24 shrink-0 font-mono text-sm">Sep 2025</span>
+          <span>Updated personal page; new project page for <a class="link" href="d4dgs.html">D4DGS-SLAM</a>.</span>
+        </li>
+        <li class="flex gap-4">
+          <span class="text-gray-400 dark:text-gray-500 w-24 shrink-0 font-mono text-sm">Jun 2025</span>
+          <span><b>D4DGS-SLAM</b> accepted to <b>IEEE/RSJ IROS 2025</b> as <span class="badge bg-amber-100 text-amber-800">Oral</span>.</span>
+        </li>
+        <li class="flex gap-4">
+          <span class="text-gray-400 dark:text-gray-500 w-24 shrink-0 font-mono text-sm">Jun 2024</span>
+          <span>Wrapped up research internship at <b>Huawei 2012 Theory Lab</b>, Hong Kong.</span>
+        </li>
+        <li class="flex gap-4">
+          <span class="text-gray-400 dark:text-gray-500 w-24 shrink-0 font-mono text-sm">Jun 2024</span>
+          <span>Survey paper on joint safety &amp; security risk analysis published in <b>IET Cyber-Physical Systems</b>.</span>
+        </li>
+        <li class="flex gap-4">
+          <span class="text-gray-400 dark:text-gray-500 w-24 shrink-0 font-mono text-sm">May 2024</span>
+          <span><b>AOC-IDS</b> accepted to <b>IEEE INFOCOM 2024</b> (co-author).</span>
+        </li>
+        <li class="flex gap-4">
+          <span class="text-gray-400 dark:text-gray-500 w-24 shrink-0 font-mono text-sm">Nov 2023</span>
+          <span>Contradictions identification paper published in <b>IEEE IoT Journal</b> (26-page article).</span>
+        </li>
+        <li class="flex gap-4">
+          <span class="text-gray-400 dark:text-gray-500 w-24 shrink-0 font-mono text-sm">Sep 2023</span>
+          <span>Started PhD at <b>The Hong Kong Polytechnic University</b>.</span>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Selected Publications -->
+  <section id="publications" class="mb-16">
+    <div class="flex items-end justify-between border-b border-gray-200 dark:border-gray-800 pb-2 mb-5">
+      <h2 class="slab text-2xl font-bold">selected publications</h2>
+      <a href="https://scholar.google.com/citations?user=gGSRoKAAAAAJ" target="_blank" class="text-sm link">full list on Scholar →</a>
+    </div>
+
+    <!-- Sub-heading -->
+    <h3 class="slab text-base text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-4">Robotic Perception, Reasoning &amp; Planning</h3>
+
+    <!-- Paper 1: D4DGS -->
+    <div class="pub-card grid md:grid-cols-4 gap-5 mb-7 p-4 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800/50">
+      <div class="md:col-span-1">
+        <div class="w-full h-32 rounded overflow-hidden border border-gray-200 dark:border-gray-700 bg-black">
+          <video class="teaser-video" autoplay loop muted playsinline>
+            <source src="./images/d4dgsslam.mp4" type="video/mp4" />
+          </video>
+        </div>
+      </div>
+      <div class="md:col-span-3">
+        <div class="flex items-center gap-2 mb-1">
+          <span class="badge bg-indigo-100 text-indigo-800">IROS 2025</span>
+          <span class="badge bg-amber-100 text-amber-800">Oral</span>
+        </div>
+        <p class="font-semibold text-[16px] leading-snug mb-1">Embracing Dynamics: Dynamics-aware 4D Gaussian Splatting SLAM</p>
+        <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">
+          <u>Zhicong Sun</u>, Jinxing Hu, Jacqueline Lo
+        </p>
+        <p class="text-[13px] text-gray-500 dark:text-gray-400 italic mb-3">
+          IEEE/RSJ International Conference on Intelligent Robots and Systems, 2025.
+        </p>
+        <div class="flex flex-wrap gap-2 text-xs">
+          <a href="https://arxiv.org/abs/2504.04844" target="_blank" class="px-2.5 py-1 rounded border border-gray-300 dark:border-gray-600 hover-accent-border">arXiv</a>
+          <a href="d4dgs.html" class="px-2.5 py-1 rounded border border-gray-300 dark:border-gray-600 hover-accent-border">project</a>
+          <a href="https://github.com/zhicongsun/diff-4d-gaussian-rasterization" target="_blank" class="px-2.5 py-1 rounded border border-gray-300 dark:border-gray-600 hover-accent-border">code</a>
+          <a href="projects/d4dgs/poster.pdf" target="_blank" class="px-2.5 py-1 rounded border border-gray-300 dark:border-gray-600 hover-accent-border">poster</a>
+          <button type="button" data-bib-toggle="bib-d4dgs" class="bib-toggle px-2.5 py-1 rounded border border-gray-300 dark:border-gray-600 hover-accent-border">bibtex</button>
+        </div>
+        <div id="bib-d4dgs" class="bib-block hidden mt-3 relative">
+          <button type="button" data-bib-copy="bib-d4dgs" class="bib-copy absolute top-2 right-2 text-[11px] px-2 py-0.5 rounded bg-white/90 dark:bg-gray-900/90 border border-gray-300 dark:border-gray-600 hover-accent-border">copy</button>
+<pre class="bg-gray-50 dark:bg-gray-800/80 text-gray-800 dark:text-gray-200 p-3 pr-16 rounded border border-gray-200 dark:border-gray-700"><code>@inproceedings{sun2025embracing,
+  title={Embracing dynamics: Dynamics-aware 4d gaussian splatting slam},
+  author={Sun, Zhicong and Lo, Jacqueline and Hu, Jinxing},
+  booktitle={2025 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS)},
+  pages={5331--5338},
+  year={2025},
+  organization={IEEE}
+}</code></pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- Paper 2: WildfireX -->
+    <div class="pub-card grid md:grid-cols-4 gap-5 mb-7 p-4 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800/50">
+      <div class="md:col-span-1">
+        <div class="w-full h-32 rounded overflow-hidden border border-gray-200 dark:border-gray-700 bg-black">
+          <video class="teaser-video" autoplay loop muted playsinline>
+            <source src="./images/wildfirexslam.mp4" type="video/mp4" />
+          </video>
+        </div>
+      </div>
+      <div class="md:col-span-3">
+        <div class="flex items-center gap-2 mb-1">
+          <span class="badge bg-indigo-100 text-indigo-800">MMM 2026</span>
+          <span class="badge bg-amber-100 text-amber-800">Oral</span>
+        </div>
+        <p class="font-semibold text-[16px] leading-snug mb-1">WildfireX-SLAM: A Large-scale Low-altitude RGB-D Dataset for Wildfire SLAM and Beyond</p>
+        <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">
+          <u>Zhicong Sun</u>, Jinxing Hu, Jacqueline Lo
+        </p>
+        <p class="text-[13px] text-gray-500 dark:text-gray-400 italic mb-3">
+          32nd International Conference on Multimedia Modeling, 2026.
+        </p>
+        <div class="flex flex-wrap gap-2 text-xs">
+          <a href="https://arxiv.org/abs/2510.27133" target="_blank" class="px-2.5 py-1 rounded border border-gray-300 dark:border-gray-600 hover-accent-border">arXiv</a>
+          <a href="wildfirexslam.html" class="px-2.5 py-1 rounded border border-gray-300 dark:border-gray-600 hover-accent-border">project</a>
+          <a href="https://github.com/zhicongsun/WildfireX-SLAM" target="_blank" class="px-2.5 py-1 rounded border border-gray-300 dark:border-gray-600 hover-accent-border">code &amp; dataset</a>
+          <button type="button" data-bib-toggle="bib-wildfirex" class="bib-toggle px-2.5 py-1 rounded border border-gray-300 dark:border-gray-600 hover-accent-border">bibtex</button>
+        </div>
+        <div id="bib-wildfirex" class="bib-block hidden mt-3 relative">
+          <button type="button" data-bib-copy="bib-wildfirex" class="bib-copy absolute top-2 right-2 text-[11px] px-2 py-0.5 rounded bg-white/90 dark:bg-gray-900/90 border border-gray-300 dark:border-gray-600 hover-accent-border">copy</button>
+<pre class="bg-gray-50 dark:bg-gray-800/80 text-gray-800 dark:text-gray-200 p-3 pr-16 rounded border border-gray-200 dark:border-gray-700"><code>@inproceedings{sun2026wildfirex,
+  title={WildfireX-SLAM: A Large-Scale Low-Altitude RGB-D Dataset for Wildfire SLAM and Beyond},
+  author={Sun, Zhicong and Lo, Jacqueline and Hu, Jinxing},
+  booktitle={International Conference on Multimedia Modeling},
+  pages={533--546},
+  year={2026},
+  organization={Springer}
+}</code></pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sub-heading 2 -->
+    <h3 class="slab text-base text-gray-500 dark:text-gray-400 uppercase tracking-wider mt-10 mb-4">Cyber-Physical Systems · Safety &amp; Security</h3>
+
+    <!-- Paper 3: IoT-J Contradictions -->
+    <div class="pub-card grid md:grid-cols-4 gap-5 mb-7 p-4 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800/50">
+      <div class="md:col-span-1">
+        <div class="w-full h-32 rounded overflow-hidden border border-gray-200 dark:border-gray-700 bg-white">
+          <img src="./images/ss_contradictions.png" alt="S&S Contradictions teaser" class="w-full h-full object-contain p-1" />
+        </div>
+      </div>
+      <div class="md:col-span-3">
+        <div class="flex items-center gap-2 mb-1">
+          <span class="badge bg-emerald-100 text-emerald-800">IEEE IoT-J 2023</span>
+          <span class="badge bg-gray-200 text-gray-700">26 pages</span>
+        </div>
+        <p class="font-semibold text-[16px] leading-snug mb-1">Contradictions Identification of Safety and Security Requirements for Industrial Cyber-Physical Systems</p>
+        <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">
+          <u>Zhicong Sun</u>, Yulong Ding, Shuang-Hua Yang
+        </p>
+        <p class="text-[13px] text-gray-500 dark:text-gray-400 italic mb-3">
+          IEEE Internet of Things Journal, 2023.
+        </p>
+        <div class="flex flex-wrap gap-2 text-xs">
+          <a href="https://ieeexplore.ieee.org/document/10314997" target="_blank" class="px-2.5 py-1 rounded border border-gray-300 dark:border-gray-600 hover-accent-border">DOI</a>
+          <a href="papers/journal/10.1109.JIOT.2023.3296538.pdf" target="_blank" class="px-2.5 py-1 rounded border border-gray-300 dark:border-gray-600 hover-accent-border">PDF</a>
+          <button type="button" data-bib-toggle="bib-contradictions" class="bib-toggle px-2.5 py-1 rounded border border-gray-300 dark:border-gray-600 hover-accent-border">bibtex</button>
+        </div>
+        <div id="bib-contradictions" class="bib-block hidden mt-3 relative">
+          <button type="button" data-bib-copy="bib-contradictions" class="bib-copy absolute top-2 right-2 text-[11px] px-2 py-0.5 rounded bg-white/90 dark:bg-gray-900/90 border border-gray-300 dark:border-gray-600 hover-accent-border">copy</button>
+<pre class="bg-gray-50 dark:bg-gray-800/80 text-gray-800 dark:text-gray-200 p-3 pr-16 rounded border border-gray-200 dark:border-gray-700"><code>@article{sun2023contradictions,
+  title={Contradictions identification of safety and security requirements for industrial cyber--physical systems},
+  author={Sun, Zhicong and Ding, Yulong and Pei, Ke and Yang, Shuang-Hua},
+  journal={IEEE Internet of Things Journal},
+  volume={11},
+  number={7},
+  pages={12033--12057},
+  year={2023},
+  publisher={IEEE}
+}</code></pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- Paper 4: IET-CPS Survey -->
+    <div class="pub-card grid md:grid-cols-4 gap-5 mb-7 p-4 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800/50">
+      <div class="md:col-span-1">
+        <div class="w-full h-32 rounded overflow-hidden border border-gray-200 dark:border-gray-700 bg-white">
+          <img src="./images/ss_survey.png" alt="S&S Survey teaser" class="w-full h-full object-contain p-1" />
+        </div>
+      </div>
+      <div class="md:col-span-3">
+        <div class="flex items-center gap-2 mb-1">
+          <span class="badge bg-emerald-100 text-emerald-800">IET CPS 2024</span>
+          <span class="badge bg-rose-100 text-rose-800">Survey</span>
+        </div>
+        <p class="font-semibold text-[16px] leading-snug mb-1">Joint Safety and Security Risk Analysis in Industrial Cyber-Physical Systems: A Survey</p>
+        <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">
+          <u>Zhicong Sun</u>, Guang Cheng, Yulong Ding, Shuang-Hua Yang
+        </p>
+        <p class="text-[13px] text-gray-500 dark:text-gray-400 italic mb-3">
+          IET Cyber-Physical Systems: Theory &amp; Applications, 2024.
+        </p>
+        <div class="flex flex-wrap gap-2 text-xs">
+          <a href="https://ietresearch.onlinelibrary.wiley.com/doi/10.1049/cps2.12095" target="_blank" class="px-2.5 py-1 rounded border border-gray-300 dark:border-gray-600 hover-accent-border">DOI</a>
+          <a href="https://ietresearch.onlinelibrary.wiley.com/doi/epdf/10.1049/cps2.12095" target="_blank" class="px-2.5 py-1 rounded border border-gray-300 dark:border-gray-600 hover-accent-border">PDF</a>
+          <button type="button" data-bib-toggle="bib-survey" class="bib-toggle px-2.5 py-1 rounded border border-gray-300 dark:border-gray-600 hover-accent-border">bibtex</button>
+        </div>
+        <div id="bib-survey" class="bib-block hidden mt-3 relative">
+          <button type="button" data-bib-copy="bib-survey" class="bib-copy absolute top-2 right-2 text-[11px] px-2 py-0.5 rounded bg-white/90 dark:bg-gray-900/90 border border-gray-300 dark:border-gray-600 hover-accent-border">copy</button>
+<pre class="bg-gray-50 dark:bg-gray-800/80 text-gray-800 dark:text-gray-200 p-3 pr-16 rounded border border-gray-200 dark:border-gray-700"><code>@article{sun2024joint,
+  title={Joint safety and security risk analysis in industrial cyber-physical systems: A survey},
+  author={Sun, Zhicong and Chen, Guang and Ding, Yulong and Yang, Shuang-Hua},
+  journal={IET Cyber-Physical Systems: Theory \&amp; Applications},
+  volume={9},
+  number={4},
+  pages={334--349},
+  year={2024},
+  publisher={Wiley Online Library}
+}</code></pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- Paper 5: INFOCOM AOC-IDS -->
+    <div class="pub-card grid md:grid-cols-4 gap-5 mb-7 p-4 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800/50">
+      <div class="md:col-span-1">
+        <div class="w-full h-32 rounded overflow-hidden border border-gray-200 dark:border-gray-700 bg-white">
+          <img src="./images/aoc_ids.png" alt="AOC-IDS teaser" class="w-full h-full object-contain p-1" />
+        </div>
+      </div>
+      <div class="md:col-span-3">
+        <div class="flex items-center gap-2 mb-1">
+          <span class="badge bg-indigo-100 text-indigo-800">INFOCOM 2024</span>
+        </div>
+        <p class="font-semibold text-[16px] leading-snug mb-1">AOC-IDS: Autonomous Online Framework with Contrastive Learning for Intrusion Detection</p>
+        <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">
+          Xinchen Zhang, Running Zhao, Zhihan Jiang, <u>Zhicong Sun</u>, Yulong Ding, Edith C.-H. Ngai, Shuang-Hua Yang
+        </p>
+        <p class="text-[13px] text-gray-500 dark:text-gray-400 italic mb-3">
+          IEEE INFOCOM, 2024.
+        </p>
+        <div class="flex flex-wrap gap-2 text-xs">
+          <a href="https://doi.org/10.1109/INFOCOM52122.2024.10621346" target="_blank" class="px-2.5 py-1 rounded border border-gray-300 dark:border-gray-600 hover-accent-border">DOI</a>
+          <a href="https://arxiv.org/abs/2402.01807" target="_blank" class="px-2.5 py-1 rounded border border-gray-300 dark:border-gray-600 hover-accent-border">arXiv</a>
+          <button type="button" data-bib-toggle="bib-aocids" class="bib-toggle px-2.5 py-1 rounded border border-gray-300 dark:border-gray-600 hover-accent-border">bibtex</button>
+        </div>
+        <div id="bib-aocids" class="bib-block hidden mt-3 relative">
+          <button type="button" data-bib-copy="bib-aocids" class="bib-copy absolute top-2 right-2 text-[11px] px-2 py-0.5 rounded bg-white/90 dark:bg-gray-900/90 border border-gray-300 dark:border-gray-600 hover-accent-border">copy</button>
+<pre class="bg-gray-50 dark:bg-gray-800/80 text-gray-800 dark:text-gray-200 p-3 pr-16 rounded border border-gray-200 dark:border-gray-700"><code>@inproceedings{zhang2024aoc,
+  title={Aoc-ids: Autonomous online framework with contrastive learning for intrusion detection},
+  author={Zhang, Xinchen and Zhao, Running and Jiang, Zhihan and Sun, Zhicong and Ding, Yulong and Ngai, Edith CH and Yang, Shuang-Hua},
+  booktitle={IEEE INFOCOM 2024-IEEE Conference on Computer Communications},
+  pages={581--590},
+  year={2024},
+  organization={IEEE}
+}</code></pre>
+        </div>
+      </div>
+    </div>
+
+    <p class="text-sm text-gray-500 dark:text-gray-400 mt-4">
+      Co-first-authored and under-review works (TCYB, TDSC) are listed on <a class="link" href="https://scholar.google.com/citations?user=gGSRoKAAAAAJ" target="_blank">Google Scholar</a>.
+    </p>
+  </section>
+
+  <!-- CV summary -->
+  <section id="cv" class="mb-16">
+    <h2 class="slab text-2xl font-bold mb-5 border-b border-gray-200 dark:border-gray-800 pb-2">education &amp; experience</h2>
+    <ul class="space-y-4 text-[15px]">
+      <li class="flex gap-4">
+        <span class="text-gray-400 dark:text-gray-500 w-32 shrink-0 font-mono text-sm">2023 — present</span>
+        <span><b>Ph.D., Robotics &amp; CEE</b> · The Hong Kong Polytechnic University<br/>
+          <span class="text-gray-500 text-sm">Advisors: Prof. Jacqueline Lo, Prof. Anthony Chen, Prof. Siu-Ming Lo, Prof. Jinxing Hu</span></span>
+      </li>
+      <li class="flex gap-4">
+        <span class="text-gray-400 dark:text-gray-500 w-32 shrink-0 font-mono text-sm">2024</span>
+        <span><b>Research Intern</b> · Huawei 2012 Theory Lab, Hong Kong</span>
+      </li>
+      <li class="flex gap-4">
+        <span class="text-gray-400 dark:text-gray-500 w-32 shrink-0 font-mono text-sm">2020 — 2023</span>
+        <span><b>M.Eng., Computer Science and Engineering</b> · Southern University of Science and Technology<br/>
+          <span class="text-gray-500 text-sm">Advisors: Prof. Shuang-Hua Yang, Prof. Yulong Ding</span></span>
+      </li>
+      <li class="flex gap-4">
+        <span class="text-gray-400 dark:text-gray-500 w-32 shrink-0 font-mono text-sm">2016 — 2020</span>
+        <span><b>B.Eng., Communication Engineering</b> · Harbin Institute of Technology<br/>
+        <span class="text-gray-500 text-sm">Advisors: Prof. Changjun Yu</span></span>
+      </li>
+    </ul>
+  </section>
+
+  <!-- Awards & Honors -->
+  <section id="awards" class="mb-16">
+    <h2 class="slab text-2xl font-bold mb-5 border-b border-gray-200 dark:border-gray-800 pb-2">awards &amp; honors</h2>
+
+    <!-- Highlighted -->
+    <ul class="space-y-3 text-[15px]">
+      <li class="flex gap-4">
+        <span class="text-gray-400 dark:text-gray-500 w-20 shrink-0 font-mono text-sm">2020</span>
+        <span>
+          <b>Top 10 Influential Graduate</b>, HITwh
+          <span class="text-gray-500 text-sm">— ranked 2<sup>nd</sup>, selection ratio 10 / 2368, with scholarship</span>
+        </span>
+      </li>
+      <li class="flex gap-4">
+        <span class="text-gray-400 dark:text-gray-500 w-20 shrink-0 font-mono text-sm">2020</span>
+        <span>
+          <b>Second Prize</b>, Preliminary Contest of Business Plan, 15<sup>th</sup> China Graduate Electronic Design Contest <span class="text-gray-500 text-sm">(First Author)</span>
+        </span>
+      </li>
+      <li class="flex gap-4">
+        <span class="text-gray-400 dark:text-gray-500 w-20 shrink-0 font-mono text-sm">2019</span>
+        <span>
+          <b>Second Prize</b>, Final Tournament of the 18<sup>th</sup> RoboMaster University Championship <span class="text-gray-500 text-sm">(First Author)</span>
+        </span>
+      </li>
+      <li class="flex gap-4">
+        <span class="text-gray-400 dark:text-gray-500 w-20 shrink-0 font-mono text-sm">2019</span>
+        <span>
+          <b>Grand Prize</b>, North China Division, 18<sup>th</sup> Robomaster University Technical Challenge <span class="text-gray-500 text-sm">(First Author)</span>
+        </span>
+      </li>
+      <li class="flex gap-4">
+        <span class="text-gray-400 dark:text-gray-500 w-20 shrink-0 font-mono text-sm">2018</span>
+        <span>
+          <b>Grand Prize</b>, 7<sup>th</sup> China Marine Vehicle Design and Construction Contest <span class="text-gray-500 text-sm">(First Author)</span>
+        </span>
+      </li>
+      <li class="flex gap-4">
+        <span class="text-gray-400 dark:text-gray-500 w-20 shrink-0 font-mono text-sm">2017—'19</span>
+        <span>
+          <b>Science and Technology Innovation Scholarship</b>, HITwh <span class="text-gray-500 text-sm">(3 consecutive years)</span>
+        </span>
+      </li>
+    </ul>
+
+    <!-- Collapsible: rest -->
+    <details class="mt-5">
+      <summary class="text-sm link inline-flex items-center gap-1">
+        <span class="chev">▸</span> show <b>10</b> more awards &amp; honors
+      </summary>
+      <ul class="space-y-3 text-[15px] mt-4 pl-1 border-l-2 border-gray-200 dark:border-gray-800 ml-2 pl-5">
+        <li class="flex gap-4">
+          <span class="text-gray-400 dark:text-gray-500 w-20 shrink-0 font-mono text-sm">2020</span>
+          <span>Second Prize, South China Division, 15<sup>th</sup> China Graduate Electronic Design Contest <span class="text-gray-500 text-sm">(Second Author)</span></span>
+        </li>
+        <li class="flex gap-4">
+          <span class="text-gray-400 dark:text-gray-500 w-20 shrink-0 font-mono text-sm">2019</span>
+          <span>First Prize, Northern Division, 18<sup>th</sup> RoboMaster University Championship <span class="text-gray-500 text-sm">(First Author)</span></span>
+        </li>
+        <li class="flex gap-4">
+          <span class="text-gray-400 dark:text-gray-500 w-20 shrink-0 font-mono text-sm">2019</span>
+          <span>Outstanding Scientific and Technological Innovation Individual, HITwh</span>
+        </li>
+        <li class="flex gap-4">
+          <span class="text-gray-400 dark:text-gray-500 w-20 shrink-0 font-mono text-sm">2019</span>
+          <span>Participation Award, ICRA RoboMaster AI Challenge <span class="text-gray-500 text-sm">(Member)</span></span>
+        </li>
+        <li class="flex gap-4">
+          <span class="text-gray-400 dark:text-gray-500 w-20 shrink-0 font-mono text-sm">2018</span>
+          <span>Third Prize, University Student Science and Technology Innovation Competition, Shandong <span class="text-gray-500 text-sm">(Second Author)</span></span>
+        </li>
+        <li class="flex gap-4">
+          <span class="text-gray-400 dark:text-gray-500 w-20 shrink-0 font-mono text-sm">2018</span>
+          <span>Third Prize, Northern Division, 17<sup>th</sup> RoboMaster University Championship <span class="text-gray-500 text-sm">(First Author)</span></span>
+        </li>
+        <li class="flex gap-4">
+          <span class="text-gray-400 dark:text-gray-500 w-20 shrink-0 font-mono text-sm">2018</span>
+          <span>First Prize, HITwh Internal Contest, Shandong Science and Technology Innovation Competition <span class="text-gray-500 text-sm">(Second Author)</span></span>
+        </li>
+        <li class="flex gap-4">
+          <span class="text-gray-400 dark:text-gray-500 w-20 shrink-0 font-mono text-sm">2018</span>
+          <span>Second Prize, 1<sup>st</sup> HITwh Headmaster Cup Science and Technology Contest <span class="text-gray-500 text-sm">(First Author)</span></span>
+        </li>
+        <li class="flex gap-4">
+          <span class="text-gray-400 dark:text-gray-500 w-20 shrink-0 font-mono text-sm">2018</span>
+          <span>First Prize, HITwh AI &amp; Intelligent Hardware Contest <span class="text-gray-500 text-sm">(First Author)</span></span>
+        </li>
+        <li class="flex gap-4">
+          <span class="text-gray-400 dark:text-gray-500 w-20 shrink-0 font-mono text-sm">2017—'18</span>
+          <span>Outstanding Party Member · Excellent Volunteer · Social Work / Sports Scholarship, HITwh</span>
+        </li>
+      </ul>
+    </details>
+  </section>
+
+  <!-- Services -->
+  <section id="services" class="mb-16">
+    <h2 class="slab text-2xl font-bold mb-5 border-b border-gray-200 dark:border-gray-800 pb-2">services</h2>
+    <p class="text-[15px] leading-relaxed">
+      <b>Reviewer</b> · ICCV · IROS · IEEE Internet of Things Journal · Archives of Computational Methods in Engineering (Springer) · MMM
+    </p>
+  </section>
+
+</main>
+
+<!-- Footer -->
+<footer class="border-t border-gray-200 dark:border-gray-800 mt-8">
+  <div class="max-w-5xl mx-auto px-6 py-6 text-sm text-gray-500 dark:text-gray-400">
+    <!-- ClustrMaps invisible tracking pixel: image still loads (visit counted) but is not displayed. -->
+    <img src="//clustrmaps.com/map_v2.png?cl=ffffff&w=251&t=tt&d=EJ36OnHiMpvk1484U4QTW35k_sts08FJslM08SpBTE8&co=353535&ct=edeaea" alt="" aria-hidden="true" style="position:absolute;width:1px;height:1px;opacity:0;pointer-events:none;left:-9999px;" />
+    <div class="flex flex-col md:flex-row justify-between items-center gap-2">
+      <span>© 2025 Zhicong Sun. All rights reserved.</span>
+      <span>Last updated: May 2026 · Inspired by <a href="https://github.com/alshedivat/al-folio" target="_blank" class="link">al-folio</a></span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Theme toggle with localStorage
+  const root = document.documentElement;
+  const btn = document.getElementById('theme-toggle');
+  const stored = localStorage.getItem('theme');
+  if (stored === 'dark' || (!stored && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+    root.classList.add('dark');
+  }
+  btn.addEventListener('click', () => {
+    root.classList.toggle('dark');
+    localStorage.setItem('theme', root.classList.contains('dark') ? 'dark' : 'light');
+  });
+
+  // BibTeX expand / collapse
+  document.querySelectorAll('[data-bib-toggle]').forEach(b => {
+    b.addEventListener('click', () => {
+      const target = document.getElementById(b.dataset.bibToggle);
+      const opening = target.classList.contains('hidden');
+      target.classList.toggle('hidden');
+      b.classList.toggle('is-open', opening);
+    });
+  });
+
+  // BibTeX copy-to-clipboard
+  document.querySelectorAll('[data-bib-copy]').forEach(b => {
+    b.addEventListener('click', async () => {
+      const target = document.getElementById(b.dataset.bibCopy);
+      const text = target.querySelector('code').textContent;
+      try {
+        await navigator.clipboard.writeText(text);
+        const original = b.textContent;
+        b.textContent = 'copied!';
+        setTimeout(() => { b.textContent = original; }, 1500);
+      } catch (e) {
+        const range = document.createRange();
+        range.selectNodeContents(target.querySelector('code'));
+        const sel = window.getSelection();
+        sel.removeAllRanges();
+        sel.addRange(range);
+        b.textContent = 'press ⌘C';
+      }
+    });
+  });
+</script>
+
 </body>
 </html>
