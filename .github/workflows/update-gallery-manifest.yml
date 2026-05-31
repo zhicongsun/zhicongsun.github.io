@@ -14,7 +14,7 @@ jobs:
       - name: Install Pillow
         run: pip install pillow --quiet
 
-      - name: Generate manifest.json (cool→warm hue, dark→light brightness)
+      - name: Generate manifest.json (pinned first, then cool→warm hue + dark→light brightness)
         run: |
           python3 - <<'EOF'
           import os, json, colorsys
@@ -29,22 +29,36 @@ jobs:
                   g = sum(p[1] for p in pixels) / n / 255.0
                   b = sum(p[2] for p in pixels) / n / 255.0
                   h, s, v = colorsys.rgb_to_hsv(r, g, b)
-                  cool_to_warm = (0.67 - h) % 1.0  # blue=0, cyan, green, yellow, red=last
-                  return (cool_to_warm, v)           # secondary: dark→light
+                  cool_to_warm = (0.67 - h) % 1.0
+                  return (cool_to_warm, v)
               except Exception:
-                  return (0.5, 0.5)  # fallback to middle if image unreadable
+                  return (0.5, 0.5)
 
+          # Load pinned list (preserve order, case-insensitive matching)
+          pinned = []
+          if os.path.exists('gallery/pinned.json'):
+              with open('gallery/pinned.json') as f:
+                  pinned = json.load(f)
+          pinned_lower = {p.lower() for p in pinned}
+
+          # All image files
           exts = ('.jpg', '.jpeg', '.png', '.webp')
-          files = [f for f in os.listdir('gallery') if f.lower().endswith(exts)]
-          files.sort(key=lambda f: sort_key(os.path.join('gallery', f)))
+          all_files = [f for f in os.listdir('gallery') if f.lower().endswith(exts)]
+
+          # Rest = all files not in pinned list, sorted by color
+          rest = [f for f in all_files if f.lower() not in pinned_lower]
+          rest.sort(key=lambda f: sort_key(os.path.join('gallery', f)))
+
+          # Only include pinned files that actually exist
+          existing_pinned = [p for p in pinned if p in all_files]
+
+          files = existing_pinned + rest
 
           with open('gallery/manifest.json', 'w') as fp:
               json.dump(files, fp, indent=2)
               fp.write('\n')
-          print(f"Wrote {len(files)} files to gallery/manifest.json")
-          for f in files:
-              key = sort_key(os.path.join('gallery', f))
-              print(f"  {key[0]:.3f} / {key[1]:.3f}  {f}")
+
+          print(f"Pinned: {len(existing_pinned)}, Rest: {len(rest)}, Total: {len(files)}")
           EOF
 
       - name: Commit manifest
