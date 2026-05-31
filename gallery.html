@@ -35,19 +35,42 @@
     font-weight: 400;
   }
 
-  /* Grid */
-  .grid {
+  /* Pinned grid — row-major (left→right, then next row) */
+  #pinned-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3px;
+    padding: 3px 3px 0 3px;
+  }
+  @media (max-width: 640px) {
+    #pinned-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  #pinned-grid .photo-item {
+    margin-bottom: 0;
+    aspect-ratio: 2 / 3;
+  }
+  #pinned-grid .photo-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* Masonry grid — column-major */
+  #gallery-grid {
     columns: 3;
     column-gap: 3px;
     padding: 3px;
   }
   @media (max-width: 640px) {
-    .grid { columns: 2; }
+    #gallery-grid { columns: 2; }
   }
-
-  .photo-item {
+  #gallery-grid .photo-item {
     break-inside: avoid;
     margin-bottom: 3px;
+  }
+
+  /* Shared photo-item styles */
+  .photo-item {
     overflow: hidden;
     cursor: pointer;
     position: relative;
@@ -142,7 +165,11 @@
   <span>gallery</span>
 </nav>
 
-<div class="grid" id="gallery-grid"></div>
+<!-- Pinned photos: row-major grid -->
+<div id="pinned-grid"></div>
+
+<!-- Rest: masonry columns -->
+<div id="gallery-grid"></div>
 
 <div class="signature">© zhicong sun</div>
 
@@ -156,31 +183,40 @@
 </div>
 
 <script>
-  // Disable right-click on photos and lightbox
-  document.getElementById('gallery-grid').addEventListener('contextmenu', e => e.preventDefault());
-  document.getElementById('lightbox').addEventListener('contextmenu', e => e.preventDefault());
+  // Disable right-click
+  ['pinned-grid','gallery-grid','lightbox'].forEach(id =>
+    document.getElementById(id).addEventListener('contextmenu', e => e.preventDefault())
+  );
 
-  // --- Photo loading: manifest.json (ordered) → GitHub API fallback ---
-  async function loadFilenames() {
-    // Primary: manifest.json — maintained by GitHub Actions, respects pinned order
+  // --- Load pinned list + full manifest ---
+  async function loadData() {
+    let pinnedNames = [];
+    try {
+      const res = await fetch('gallery/pinned.json');
+      if (res.ok) pinnedNames = await res.json();
+    } catch (_) {}
+
+    let allFiles = [];
     try {
       const res = await fetch('gallery/manifest.json');
-      if (!res.ok) throw new Error('manifest failed');
-      return await res.json();
-    } catch (_) {}
+      if (!res.ok) throw new Error();
+      allFiles = await res.json();
+    } catch (_) {
+      try {
+        const res = await fetch('https://api.github.com/repos/zhicongsun/zhicongsun.github.io/contents/gallery');
+        if (!res.ok) throw new Error();
+        const data = await res.json();
+        allFiles = data
+          .filter(f => f.type === 'file' && /\.(jpg|jpeg|png|webp)$/i.test(f.name))
+          .map(f => f.name).sort();
+      } catch (_) {}
+    }
 
-    // Fallback: GitHub API (alphabetical, no pinning)
-    try {
-      const res = await fetch('https://api.github.com/repos/zhicongsun/zhicongsun.github.io/contents/gallery');
-      if (!res.ok) throw new Error('api failed');
-      const data = await res.json();
-      return data
-        .filter(f => f.type === 'file' && /\.(jpg|jpeg|png|webp)$/i.test(f.name))
-        .map(f => f.name)
-        .sort();
-    } catch (_) {}
-
-    return [];
+    const pinnedSet = new Set(pinnedNames.map(p => p.toLowerCase()));
+    return {
+      pinned: allFiles.filter(f => pinnedSet.has(f.toLowerCase())),
+      rest:   allFiles.filter(f => !pinnedSet.has(f.toLowerCase()))
+    };
   }
 
   // --- Watermark ---
@@ -202,44 +238,61 @@
     return canvas.toDataURL('image/jpeg', 0.92);
   }
 
-  // --- Render grid ---
+  // --- Shared state ---
   const renderedUrls = [];
-  const grid = document.getElementById('gallery-grid');
+  const pinnedGrid = document.getElementById('pinned-grid');
+  const galleryGrid = document.getElementById('gallery-grid');
 
-  async function renderPhotos(filenames) {
-    // Load all images in parallel, insert DOM only once all are ready
-    const items = await Promise.all(filenames.map((name, i) =>
-      new Promise(resolve => {
-        const item = document.createElement('div');
-        item.className = 'photo-item';
-        item.dataset.index = i;
+  function createItem(name, index) {
+    return new Promise(resolve => {
+      const item = document.createElement('div');
+      item.className = 'photo-item';
+      item.dataset.index = index;
 
-        const img = document.createElement('img');
-        img.alt = '';
+      const img = document.createElement('img');
+      img.alt = '';
 
-        const finish = () => {
-          try {
-            renderedUrls[i] = renderWithWatermark(img);
-            img.src = renderedUrls[i];
-          } catch (_) {
-            renderedUrls[i] = img.src;
-          }
-          img.classList.add('loaded');
-          item.appendChild(img);
-          item.addEventListener('click', () => openLightbox(i));
-          resolve(item);
-        };
+      const finish = () => {
+        try {
+          renderedUrls[index] = renderWithWatermark(img);
+          img.src = renderedUrls[index];
+        } catch (_) {
+          renderedUrls[index] = img.src;
+        }
+        img.classList.add('loaded');
+        item.appendChild(img);
+        item.addEventListener('click', () => openLightbox(index));
+        resolve(item);
+      };
 
-        img.addEventListener('load', finish, { once: true });
-        img.addEventListener('error', () => { renderedUrls[i] = img.src; img.classList.add('loaded'); item.appendChild(img); item.addEventListener('click', () => openLightbox(i)); resolve(item); }, { once: true });
-        img.src = 'gallery/' + name;
-      })
-    ));
-
-    items.forEach(item => grid.appendChild(item));
+      img.addEventListener('load', finish, { once: true });
+      img.addEventListener('error', () => {
+        renderedUrls[index] = img.src;
+        img.classList.add('loaded');
+        item.appendChild(img);
+        item.addEventListener('click', () => openLightbox(index));
+        resolve(item);
+      }, { once: true });
+      img.src = 'gallery/' + name;
+    });
   }
 
-  loadFilenames().then(renderPhotos);
+  async function renderPhotos({ pinned, rest }) {
+    let idx = 0;
+
+    // Pinned: load in parallel, insert into row-major grid
+    if (pinned.length) {
+      const items = await Promise.all(pinned.map(name => createItem(name, idx++)));
+      items.forEach(item => pinnedGrid.appendChild(item));
+    }
+
+    // Rest: load in parallel, insert into masonry grid
+    const restStart = idx;
+    const items = await Promise.all(rest.map(name => createItem(name, idx++)));
+    items.forEach(item => galleryGrid.appendChild(item));
+  }
+
+  loadData().then(renderPhotos);
 
   // --- Lightbox ---
   let current = 0;
