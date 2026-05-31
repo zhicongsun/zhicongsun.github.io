@@ -278,18 +278,25 @@
   }
 
   async function renderPhotos({ pinned, rest }) {
-    let idx = 0;
+    // Pad pinned to fill complete rows (3 cols desktop / 2 cols mobile → lcm=6, simpler: next multiple of 3)
+    const COLS = 3;
+    const rem = pinned.length % COLS;
+    const padding = rem === 0 ? 0 : COLS - rem;
+    const paddedPinned = pinned.concat(rest.slice(0, padding));
+    const trimmedRest = rest.slice(padding);
+    const pinnedCount = paddedPinned.length;
 
-    // Pinned: load in parallel, insert into row-major grid
-    if (pinned.length) {
-      const items = await Promise.all(pinned.map(name => createItem(name, idx++)));
-      items.forEach(item => pinnedGrid.appendChild(item));
-    }
+    // Start both loading simultaneously so rest doesn't wait for pinned
+    const pinnedPromise = Promise.all(paddedPinned.map((name, i) => createItem(name, i)));
+    const restPromise   = Promise.all(trimmedRest.map((name, i) => createItem(name, pinnedCount + i)));
 
-    // Rest: load in parallel, insert into masonry grid
-    const restStart = idx;
-    const items = await Promise.all(rest.map(name => createItem(name, idx++)));
-    items.forEach(item => galleryGrid.appendChild(item));
+    // Insert pinned first (fast, small count; rest is already loading in background)
+    const pinnedItems = await pinnedPromise;
+    pinnedItems.forEach(item => pinnedGrid.appendChild(item));
+
+    // Insert rest batch once ready (batch to avoid masonry column shuffle)
+    const restItems = await restPromise;
+    restItems.forEach(item => galleryGrid.appendChild(item));
   }
 
   loadData().then(renderPhotos);
