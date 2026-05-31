@@ -228,7 +228,7 @@
       if (img.complete && img.naturalWidth) {
         apply();
       } else {
-        img.addEventListener('load', apply);
+        img.addEventListener('load', apply, { once: true });
       }
 
       item.appendChild(img);
