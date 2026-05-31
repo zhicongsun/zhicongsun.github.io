@@ -286,17 +286,15 @@
     const trimmedRest = rest.slice(padding);
     const pinnedCount = paddedPinned.length;
 
-    // Start both loading simultaneously so rest doesn't wait for pinned
     const pinnedPromise = Promise.all(paddedPinned.map((name, i) => createItem(name, i)));
-    const restPromise   = Promise.all(trimmedRest.map((name, i) => createItem(name, pinnedCount + i)));
 
-    // Insert pinned first (fast, small count; rest is already loading in background)
+    // Kick off rest loading in background; insert each item as it resolves
+    trimmedRest.forEach((name, i) => {
+      createItem(name, pinnedCount + i).then(item => galleryGrid.appendChild(item));
+    });
+
     const pinnedItems = await pinnedPromise;
     pinnedItems.forEach(item => pinnedGrid.appendChild(item));
-
-    // Insert rest batch once ready (batch to avoid masonry column shuffle)
-    const restItems = await restPromise;
-    restItems.forEach(item => galleryGrid.appendChild(item));
   }
 
   loadData().then(renderPhotos);
