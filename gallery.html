@@ -204,37 +204,37 @@
   const renderedUrls = [];
   const grid = document.getElementById('gallery-grid');
 
-  function renderPhotos(filenames) {
-    filenames.forEach((name, i) => {
-      const item = document.createElement('div');
-      item.className = 'photo-item';
-      item.dataset.index = i;
+  async function renderPhotos(filenames) {
+    // Load all images in parallel, insert DOM only once all are ready
+    const items = await Promise.all(filenames.map((name, i) =>
+      new Promise(resolve => {
+        const item = document.createElement('div');
+        item.className = 'photo-item';
+        item.dataset.index = i;
 
-      const img = document.createElement('img');
-      img.alt = '';
-      img.loading = 'lazy';
-      img.src = 'gallery/' + name;
+        const img = document.createElement('img');
+        img.alt = '';
 
-      const apply = () => {
-        try {
-          renderedUrls[i] = renderWithWatermark(img);
-          img.src = renderedUrls[i];
-        } catch (_) {
-          renderedUrls[i] = img.src;
-        }
-        img.classList.add('loaded');
-      };
+        const finish = () => {
+          try {
+            renderedUrls[i] = renderWithWatermark(img);
+            img.src = renderedUrls[i];
+          } catch (_) {
+            renderedUrls[i] = img.src;
+          }
+          img.classList.add('loaded');
+          item.appendChild(img);
+          item.addEventListener('click', () => openLightbox(i));
+          resolve(item);
+        };
 
-      if (img.complete && img.naturalWidth) {
-        apply();
-      } else {
-        img.addEventListener('load', apply, { once: true });
-      }
+        img.addEventListener('load', finish, { once: true });
+        img.addEventListener('error', () => { renderedUrls[i] = img.src; img.classList.add('loaded'); item.appendChild(img); item.addEventListener('click', () => openLightbox(i)); resolve(item); }, { once: true });
+        img.src = 'gallery/' + name;
+      })
+    ));
 
-      item.appendChild(img);
-      item.addEventListener('click', () => openLightbox(i));
-      grid.appendChild(item);
-    });
+    items.forEach(item => grid.appendChild(item));
   }
 
   loadFilenames().then(renderPhotos);
