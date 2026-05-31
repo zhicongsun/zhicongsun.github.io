@@ -11,19 +11,40 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Generate manifest.json
+      - name: Install Pillow
+        run: pip install pillow --quiet
+
+      - name: Generate manifest.json (cool→warm hue, dark→light brightness)
         run: |
           python3 - <<'EOF'
-          import os, json
+          import os, json, colorsys
+          from PIL import Image
+
+          def sort_key(filepath):
+              try:
+                  img = Image.open(filepath).convert('RGB').resize((50, 50))
+                  pixels = list(img.getdata())
+                  n = len(pixels)
+                  r = sum(p[0] for p in pixels) / n / 255.0
+                  g = sum(p[1] for p in pixels) / n / 255.0
+                  b = sum(p[2] for p in pixels) / n / 255.0
+                  h, s, v = colorsys.rgb_to_hsv(r, g, b)
+                  cool_to_warm = (0.67 - h) % 1.0  # blue=0, cyan, green, yellow, red=last
+                  return (cool_to_warm, v)           # secondary: dark→light
+              except Exception:
+                  return (0.5, 0.5)  # fallback to middle if image unreadable
+
           exts = ('.jpg', '.jpeg', '.png', '.webp')
-          files = sorted([
-            f for f in os.listdir('gallery')
-            if f.lower().endswith(exts)
-          ])
+          files = [f for f in os.listdir('gallery') if f.lower().endswith(exts)]
+          files.sort(key=lambda f: sort_key(os.path.join('gallery', f)))
+
           with open('gallery/manifest.json', 'w') as fp:
-            json.dump(files, fp, indent=2)
-            fp.write('\n')
+              json.dump(files, fp, indent=2)
+              fp.write('\n')
           print(f"Wrote {len(files)} files to gallery/manifest.json")
+          for f in files:
+              key = sort_key(os.path.join('gallery', f))
+              print(f"  {key[0]:.3f} / {key[1]:.3f}  {f}")
           EOF
 
       - name: Commit manifest
