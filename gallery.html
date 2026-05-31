@@ -160,8 +160,16 @@
   document.getElementById('gallery-grid').addEventListener('contextmenu', e => e.preventDefault());
   document.getElementById('lightbox').addEventListener('contextmenu', e => e.preventDefault());
 
-  // --- Photo loading: GitHub API → manifest.json fallback ---
+  // --- Photo loading: manifest.json (ordered) → GitHub API fallback ---
   async function loadFilenames() {
+    // Primary: manifest.json — maintained by GitHub Actions, respects pinned order
+    try {
+      const res = await fetch('gallery/manifest.json');
+      if (!res.ok) throw new Error('manifest failed');
+      return await res.json();
+    } catch (_) {}
+
+    // Fallback: GitHub API (alphabetical, no pinning)
     try {
       const res = await fetch('https://api.github.com/repos/zhicongsun/zhicongsun.github.io/contents/gallery');
       if (!res.ok) throw new Error('api failed');
@@ -170,12 +178,6 @@
         .filter(f => f.type === 'file' && /\.(jpg|jpeg|png|webp)$/i.test(f.name))
         .map(f => f.name)
         .sort();
-    } catch (_) {}
-
-    try {
-      const res = await fetch('gallery/manifest.json');
-      if (!res.ok) throw new Error('manifest failed');
-      return await res.json();
     } catch (_) {}
 
     return [];
