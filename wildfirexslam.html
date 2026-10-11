@@ -2,177 +2,292 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <meta name="description"
-        content="WildfireX-SLAM: A Large-scale Low-altitude
-        RGB-D Dataset for Wildfire SLAM and Beyond">
-  <meta name="keywords" content="D4DGS-SLAM">
+  <meta name="description" content="WildfireX-SLAM: a low-altitude UAV dataset and open simulation toolkit for wildfire and forest environments. v2.0: multi-modal data with exact poses, controllable fire, smoke, fog, leaves and lighting.">
+  <meta name="keywords" content="WildfireX-SLAM, wildfire, forest, SLAM, 3D Gaussian Splatting, RGB-D, UAV, dataset, simulator, Unreal Engine, AirSim">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>D4DGS-SLAM</title>
+  <title>WildfireX-SLAM</title>
 
-
-
-<link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
-        rel="stylesheet">
-
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
   <link rel="stylesheet" href="./projects/wildfirexslam/css/bulma.min.css">
-  <link rel="stylesheet" href="./projects/wildfirexslam/css/bulma-carousel.min.css">
-  <link rel="stylesheet" href="./projects/wildfirexslam/css/bulma-slider.min.css">
   <link rel="stylesheet" href="./projects/wildfirexslam/css/fontawesome.all.min.css">
-  <link rel="stylesheet"
-        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
   <link rel="stylesheet" href="./projects/wildfirexslam/css/index.css">
+  <script defer src="./projects/wildfirexslam/js/fontawesome.all.min.js"></script>
+  <script defer src="https://cloud.umami.is/script.js" data-website-id="aad048f5-3fca-4b7e-951e-85947610839e"></script>
 
   <style>
-    /* 隐藏访客统计地图 */
-    a[href*='clustrmaps.com'],
-    a[title*='ClustrMaps'],
-    img[src*='clustrmaps.com'] {
-      display: none !important;
-      visibility: hidden !important;
-      opacity: 0 !important;
-      height: 0 !important;
-      width: 0 !important;
-      margin: 0 !important;
-      padding: 0 !important;
-      border: none !important;
-    }
+    /* hide the visitor map */
+    a[href*='clustrmaps.com'], a[title*='ClustrMaps'], img[src*='clustrmaps.com'] { display: none !important; }
+    .tagline { font-size: 1.15rem; color: #444; margin-top: .4rem; }
+    .tagline b { color: #e8590c; }
+    .news-box { max-width: 760px; margin: 0 auto; }
+    .news-box li { margin-bottom: .35rem; }
+    .tag-new { background: #e8590c; color: #fff; border-radius: 4px; padding: 0 .4rem; font-size: .75rem; margin-right: .4rem; vertical-align: 1px; }
+    .stats { display: flex; flex-wrap: wrap; justify-content: center; gap: .75rem; margin: 1.5rem auto 0; max-width: 900px; }
+    .stat { flex: 1 1 120px; max-width: 160px; border: 1px solid #eee; border-radius: 10px; padding: .8rem .5rem; text-align: center; }
+    .stat b { display: block; font-size: 1.6rem; font-family: 'Google Sans', sans-serif; color: #e8590c; line-height: 1.2; }
+    .stat span { font-size: .85rem; color: #555; }
+    .section-title { margin-top: 3rem !important; }
+    .media-frame { width: 100%; border-radius: 10px; display: block; background: #000; }
+    .caption { color: #666; font-size: .9rem; margin-top: .5rem; }
+    /* before / after slider */
+    .ba { position: relative; width: 100%; aspect-ratio: 4 / 3; overflow: hidden; border-radius: 10px; user-select: none; background: #111; }
+    .ba img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
+    .ba .after { clip-path: inset(0 0 0 50%); }
+    .ba .divider { position: absolute; top: 0; bottom: 0; left: 50%; width: 2px; background: #fff; box-shadow: 0 0 6px rgba(0,0,0,.6); pointer-events: none; }
+    .ba .label { position: absolute; top: .5rem; padding: .1rem .5rem; border-radius: 4px; background: rgba(0,0,0,.55); color: #fff; font-size: .8rem; }
+    .ba .label.l { left: .5rem; } .ba .label.r { right: .5rem; }
+    .ba input[type=range] { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: ew-resize; margin: 0; }
+    .ba-title { font-family: 'Google Sans', sans-serif; font-weight: 600; margin: .4rem 0 .2rem; }
+    .scroll-x { overflow-x: auto; border-radius: 10px; }
+    .scroll-x img { min-width: 900px; width: 100%; display: block; }
+    table.bench td, table.bench th { vertical-align: middle; }
+    pre.cmd { text-align: left; background: #1e1e1e; color: #e6e6e6; border-radius: 8px; padding: 1rem; font-size: .85rem; white-space: pre-wrap; }
+    pre.cmd .c { color: #8a8a8a; }
+    .steps { counter-reset: s; text-align: left; padding-left: 0; }
+    .steps li { list-style: none; margin: .4rem 0; padding-left: 2rem; position: relative; }
+    .steps li::before { counter-increment: s; content: counter(s); position: absolute; left: 0; top: 0; width: 1.4rem; height: 1.4rem; border-radius: 50%; background: #e8590c; color: #fff; font-size: .8rem; text-align: center; line-height: 1.4rem; }
+    .roadmap td:first-child { white-space: nowrap; font-weight: 600; }
+    pre.bib { text-align: left; font-size: .8rem; }
+    details.v1-box { border: 1px solid #e5e5e5; border-radius: 10px; padding: .9rem 1.2rem; margin-top: 1.5rem; }
+    details.v1-box summary { cursor: pointer; font-family: 'Google Sans', sans-serif; font-weight: 600; }
+    details.v1-box[open] summary { margin-bottom: .5rem; }
   </style>
-
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script defer src="./projects/wildfirexslam/js/fontawesome.all.min.js"></script>
-  <script src="./projects/wildfirexslam/js/bulma-carousel.min.js"></script>
-  <script src="./projects/wildfirexslam/js/bulma-slider.min.js"></script>
-  <script src="./projects/wildfirexslam/js/index.js"></script>
-  <script defer src="https://cloud.umami.is/script.js" data-website-id="aad048f5-3fca-4b7e-951e-85947610839e"></script>
 </head>
 <body>
-
-
 
 <section class="hero">
   <div class="hero-body">
     <div class="container is-max-desktop">
+      <div class="column has-text-centered">
+        <h1 class="title is-1 publication-title">WildfireX-SLAM</h1>
+        <h1 class="title is-3 publication-title">A Low-altitude Multi-modal UAV Dataset and Simulator for Wildfire SLAM and Beyond</h1>
+        <p class="tagline"><b>v2.0</b> &middot; 19 sequences &middot; 7 pixel-aligned modalities &middot; exact poses &middot; open toolkit</p>
+        <div class="is-size-5 publication-authors" style="margin-top:1rem">
+          <span class="author-block"><a href="https://zhicongsun.github.io/">Zhicong Sun</a><sup>1</sup></span>&nbsp;&nbsp;&nbsp;&nbsp;
+          <span class="author-block"><a href="">Jacqueline Lo</a><sup>1*</sup></span>&nbsp;&nbsp;&nbsp;&nbsp;
+          <span class="author-block"><a href="">Jinxing Hu</a><sup>2*</sup></span>
+        </div>
+        <div class="column is-full_width"><h2 class="is-size-6">* Corresponding Authors</h2></div>
+        <div class="is-size-5 publication-authors">
+          <span class="author-block"><sup>1</sup>Hong Kong Polytechnic University</span>&nbsp;&nbsp;
+          <span class="author-block"><sup>2</sup>Shenzhen Institutes of Advanced Technology, Chinese Academy of Sciences</span>
+        </div>
+
         <div class="column has-text-centered">
-          <h1 class="title is-1 publication-title">WildfireX-SLAM:</h1>
-          <h1 class="title is-1 publication-title">A Large-scale Low-altitude
-            RGB-D Dataset for Wildfire SLAM and Beyond
-	  <h1 class="title is-4 publlication-title">MMM 2026 (Oral)</h1>
-          <div class="is-size-5 publication-authors">
-            <span class="author-block">
-              <a href="https://zhicongsun.github.io/">Zhicong Sun</a><sup>1</sup></span>&nbsp;&nbsp;&nbsp;&nbsp;
-              <span class="author-block">
-                <a href="">Jinxing Hu</a><sup>2*</sup></span>&nbsp;&nbsp;&nbsp;&nbsp;
-              <span class="author-block">
-              <a href="">Jacqueline Lo</a><sup>1*</sup>&nbsp;&nbsp;&nbsp;&nbsp;
+          <div class="publication-links">
+            <span class="link-block">
+              <a href="https://arxiv.org/abs/2510.27133" target="_blank" class="button is-normal is-rounded is-dark">
+                <span class="icon"><i class="ai ai-arxiv"></i></span><span>Paper</span></a>
             </span>
-            
+            <span class="link-block">
+              <a href="https://github.com/zhicongsun/WildfireX-SLAM" target="_blank" class="button is-normal is-rounded is-dark">
+                <span class="icon"><i class="fab fa-github"></i></span><span>Code &amp; Toolkit</span></a>
+            </span>
+            <span class="link-block">
+              <a href="https://huggingface.co/datasets/zhicongsun/WildfireX-SLAM" target="_blank" class="button is-normal is-rounded is-dark">
+                <span class="icon"><i class="fas fa-database"></i></span><span>Dataset v2.0</span></a>
+            </span>
+            <span class="link-block">
+              <a class="button is-normal is-rounded is-dark" aria-disabled="true" style="opacity:.55;pointer-events:none" title="The packaged simulator will be released soon">
+                <span class="icon"><i class="fas fa-cube"></i></span><span>Simulator (coming soon)</span></a>
+            </span>
           </div>
-          <div class="column is-full_width">
-            <h2 class="is-size-6">* Corresponding Authors</h2>
-          </div>
-
-          <div class="is-size-5 publication-authors">
-            <span class="author-block"><sup>1</sup>Hong Kong Polytechnic University</span>&nbsp;&nbsp;
-            <span class="author-block"><sup>2</sup>Shenzhen Institutes of Advanced Technology, Chinese Academy of Sciences</span>&nbsp;&nbsp;
-          </div>
-
-          <div class="column has-text-centered">
-            <div class="publication-links">
-              <span class="link-block">
-                <a href="https://arxiv.org/abs/2510.27133" target="_blank"
-                   class="button is-normal is-rounded is-dark">
-                  <span class="icon">
-                      <i class="fas fa-file-pdf"></i>
-                  </span>
-                  <span>Paper (arXiv))</span>
-                </a>
-              </span>
-               <span class="link-block">
-                <a href="https://github.com/zhicongsun/WildfireX-SLAM" target="_blank" download
-		   class="external-link button is-normal is-rounded is-dark">
-                  <span class="icon">
-                      <i class="fab fa-github"></i>
-                  </span>
-                  <span >Code and Dataset</span>
-                  </a>
-              </span> 
-            </div>
-          </div>
-        </div>
-    </div>
-  </div>
-<!-- </section> -->
-
-
-<!-- <section class="section"> -->
-  <div class="container is-max-desktop">
-    <!-- Paper video. -->
-    <div class="columns is-centered has-text-centered">
-      <div class="column is-four-fifths">
-        <div class="publication-video">
-          <video autoplay controls muted loop playsinline>
-            <source src="./projects/wildfirexslam/videos/intro.mp4" type="video/mp4">
-          </video>
         </div>
       </div>
     </div>
-    <!--/ Paper video. -->
-    <br>
-    <!-- Abstract. -->
-    <div class="columns is-centered has-text-centered">
-      <div class="column is-four-fifths">
-        <h2 class="title is-3">Abstract</h2>
-        <div class="content has-text-justified">
-          <p>
-            3D Gaussian splatting (3DGS) and its subsequent variants
-have led to remarkable progress in simultaneous localization and mapping (SLAM). While most recent 3DGS-based SLAM works focus on
-small-scale indoor scenes, developing 3DGS-based SLAM methods for
-large-scale forest scenes holds great potential for many real-world applications, especially for wildfire emergency response and forest management. However, this line of research is impeded by the absence of a
-comprehensive and high-quality dataset, and collecting such a dataset
-over real-world scenes is costly and technically infeasible. To this end,
-we have built a large-scale, comprehensive, and high-quality synthetic
-dataset for SLAM in wildfire and forest environments. Leveraging the
-Unreal Engine 5 Electric Dreams Environment Sample Project, we developed a pipeline to easily collect aerial and ground views, including
-ground-truth camera poses and a range of additional data modalities
-from unmanned aerial vehicle. Our pipeline also provides flexible controls on environmental factors such as light, weather, and types and conditions of wildfire, supporting the need for various tasks covering forest
-mapping, wildfire emergency response, and beyond. The resulting pilot
-dataset, WildfireX-SLAM, contains 5.5k low-altitude RGB-D aerial images from a large-scale forest map with a total size of 16 km². On top
-of WildfireX-SLAM, a thorough benchmark is also conducted, which not
-only reveals the unique challenges of 3DGS-based SLAM in the forest but
-also highlights potential improvements for future works. The dataset and
-code will be publicly available.
-          </p>
-        </div>
-      </div>
-    </div>
-    <!--/ Abstract. -->
   </div>
 </section>
 
+<section class="section" style="padding-top:0">
+  <div class="container is-max-desktop">
 
+    <!-- Trailer -->
+    <video class="media-frame" controls autoplay muted loop playsinline preload="metadata" poster="./projects/wildfirexslam/v2/trailer_poster.jpg">
+      <source src="./projects/wildfirexslam/v2/trailer.mp4" type="video/mp4">
+    </video>
+    <p class="caption has-text-centered">WildfireX-SLAM v2.0: first-person capture, the flight path seen from outside, all 19 sequences, and a 3D map fused from depth and ground-truth poses.</p>
 
+    <div class="stats">
+      <div class="stat"><b>19</b><span>sequences</span></div>
+      <div class="stat"><b>16.5k</b><span>frames</span></div>
+      <div class="stat"><b>6</b><span>fire sites</span></div>
+      <div class="stat"><b>7</b><span>modalities</span></div>
+      <div class="stat"><b>30 Hz</b><span>exact poses</span></div>
+      <div class="stat"><b>&le; 42 m</b><span>median altitude</span></div>
+    </div>
+
+    <!-- News -->
+    <h2 class="title is-3 has-text-centered section-title">News</h2>
+    <div class="news-box content">
+      <ul>
+        <li><span class="tag-new">NEW</span><b>2026-10</b> &mdash; <b>WildfireX-SLAM v2.0</b>: 19 sequences over 6 fire sites, canopy-following flights, 7 pixel-aligned modalities, and the open <code>wildfirex</code> data-collection toolkit (simulator release coming soon).</li>
+        <li><b>2026-01</b> &mdash; v1.0 dataset, including the Benchmark B data, available on request (<a href="https://docs.google.com/forms/d/e/1FAIpQLSffX-tsr1oIsin76nxWs4YAjIgf2QjCnUWJFvDR1EA6fIs2YA/viewform?usp=dialog" target="_blank">form</a>).</li>
+        <li><b>2025-11</b> &mdash; v1.0 data-collection code released on <a href="https://github.com/zhicongsun/WildfireX-SLAM" target="_blank">GitHub</a>.</li>
+        <li><b>2025-10</b> &mdash; Paper accepted to MMM 2026 as an <b>oral</b> presentation.</li>
+        <li><b>2025-10</b> &mdash; Paper on <a href="https://arxiv.org/abs/2510.27133" target="_blank">arXiv</a>.</li>
+      </ul>
+    </div>
+
+    <!-- Conditions -->
+    <h2 class="title is-3 has-text-centered section-title">Controllable Conditions</h2>
+    <p class="has-text-centered">Every factor is switched at runtime while the drone flies exactly the same path. Drag the sliders.</p>
+    <div class="columns is-multiline" style="margin-top:1rem">
+      <div class="column is-one-third">
+        <div class="ba-title has-text-centered">Fire</div>
+        <div class="ba">
+          <img src="./projects/wildfirexslam/v2/compare_fire_a.jpg" alt="no fire">
+          <img class="after" src="./projects/wildfirexslam/v2/compare_fire_b.jpg" alt="fire">
+          <div class="divider"></div><span class="label l">no fire</span><span class="label r">fire</span>
+          <input type="range" min="0" max="100" value="50" aria-label="fire comparison">
+        </div>
+      </div>
+      <div class="column is-one-third">
+        <div class="ba-title has-text-centered">Fog</div>
+        <div class="ba">
+          <img src="./projects/wildfirexslam/v2/compare_fog_a.jpg" alt="clear">
+          <img class="after" src="./projects/wildfirexslam/v2/compare_fog_b.jpg" alt="fog">
+          <div class="divider"></div><span class="label l">clear</span><span class="label r">fog</span>
+          <input type="range" min="0" max="100" value="50" aria-label="fog comparison">
+        </div>
+      </div>
+      <div class="column is-one-third">
+        <div class="ba-title has-text-centered">Falling leaves</div>
+        <div class="ba">
+          <img src="./projects/wildfirexslam/v2/compare_leaves_a.jpg" alt="no leaves">
+          <img class="after" src="./projects/wildfirexslam/v2/compare_leaves_b.jpg" alt="falling leaves">
+          <div class="divider"></div><span class="label l">calm</span><span class="label r">leaves</span>
+          <input type="range" min="0" max="100" value="50" aria-label="leaves comparison">
+        </div>
+      </div>
+    </div>
+    <div class="ba-title has-text-centered" style="margin-top:1rem">Time of day</div>
+    <div class="scroll-x"><img src="./projects/wildfirexslam/v2/lighting_strip.jpg" alt="morning, noon, dusk and night"></div>
+    <p class="caption has-text-centered">Morning, noon, dusk and night at the same site. At dusk a low sun from the opposite side to morning lights the canopy and the fire glows faintly; at night only the fire and a weak moon light the scene.</p>
+
+    <!-- Modalities -->
+    <h2 class="title is-3 has-text-centered section-title">Modalities and Ground Truth</h2>
+    <video class="media-frame" autoplay muted loop playsinline poster="./projects/wildfirexslam/v2/modalities_poster.jpg">
+      <source src="./projects/wildfirexslam/v2/modalities.mp4" type="video/mp4">
+    </video>
+    <p class="caption has-text-centered">
+      RGB, metric depth, surface normal and albedo (also roughness, specular and object-ID), captured in the same frame.
+      Depth includes smoke and wind-moved foliage, exactly as seen in RGB. Camera poses are exact (TUM and Replica formats).
+    </p>
+
+    <!-- All sequences -->
+    <h2 class="title is-3 has-text-centered section-title">All Sequences</h2>
+    <div class="scroll-x"><img src="./projects/wildfirexslam/v2/conditions_grid.jpg" alt="one frame of each of the 19 sequences"></div>
+
+    <!-- Benchmarks -->
+    <h2 class="title is-3 has-text-centered section-title">Benchmarks (v2.0)</h2>
+    <div class="table-container">
+      <table class="table is-fullwidth is-striped bench">
+        <thead><tr><th>Benchmark</th><th>Sites</th><th>Sequences</th><th>Factor</th><th>Flight</th></tr></thead>
+        <tbody>
+          <tr><td><b>A</b></td><td>ed01, ed02</td><td>8</td><td>no fire vs. fire</td><td>spiral around the fire; lawn-mower survey beside it</td></tr>
+          <tr><td><b>CS1</b></td><td>ed03</td><td>4</td><td>falling leaves</td><td>search flight towards the fire; spiral</td></tr>
+          <tr><td><b>CS2</b></td><td>ed04</td><td>4</td><td>morning / noon / dusk / night</td><td>spiral</td></tr>
+          <tr><td><b>CS3</b></td><td>ed05</td><td>2</td><td>fog (0 vs 0.7)</td><td>lawn-mower survey</td></tr>
+          <tr><td><b>CS4</b></td><td>ed06</td><td>1</td><td>fire + leaves + fog (0.35) + night</td><td>spiral</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="caption">All flights follow a surveyed canopy map 12&ndash;15 m above the trees (median 29&ndash;42 m above ground).
+      Paired sequences share exactly the same trajectory.</p>
+
+    <!-- Toolkit -->
+    <h2 class="title is-3 has-text-centered section-title">Collect Your Own Data</h2>
+    <div class="columns">
+      <div class="column is-5">
+        <ol class="steps">
+          <li>Get the packaged simulator <b>WildfireX-Sim</b> (Windows, no Unreal Editor needed; release coming soon).</li>
+          <li><code>pip install wildfirex</code></li>
+          <li>Describe sites, flights and conditions in a YAML config (the v2.0 config is in the repository).</li>
+          <li>Run <code>wildfirex collect</code>: frames, poses and quality checks are written automatically; every v2.0 sequence can be regenerated.</li>
+        </ol>
+      </div>
+      <div class="column is-7">
+<pre class="cmd"><span class="c"># toolkit + dataset configs</span>
+pip install wildfirex
+git clone https://github.com/zhicongsun/WildfireX-SLAM
+set WILDFIREX_SIM=C:\WildfireX-Sim-1.1-Win64\ElectricDreamsSample.exe
+
+<span class="c"># once per map: canopy surface for low-altitude flights</span>
+wildfirex survey  configs/wildfirex_slam_v2.yaml
+wildfirex survey  configs/wildfirex_slam_v2.yaml --refine
+
+<span class="c"># collect all 19 sequences (or --only ed05-0002)</span>
+wildfirex collect configs/wildfirex_slam_v2.yaml</pre>
+      </div>
+    </div>
+
+    <!-- Versions -->
+    <h2 class="title is-3 has-text-centered section-title">Versions</h2>
+    <table class="table is-fullwidth roadmap">
+      <tbody>
+        <tr><td>v1.0 &middot; 2025</td><td>Paper dataset, published at MMM 2026 (oral): 5.5k RGB-D images over a 16 km² forest map.</td></tr>
+        <tr><td>v2.0 &middot; 2026-10</td><td>Re-collection with the <code>wildfirex</code> toolkit and simulator: 6 fire sites, canopy-following flights, 7 modalities, exact poses at 30 Hz, controllable fire, smoke, fog, leaves and lighting.</td></tr>
+        <tr><td>Next</td><td>Spreading fires with per-frame fire-front ground truth.</td></tr>
+      </tbody>
+    </table>
+
+    <!-- v1.0 paper (collapsible) -->
+    <details class="v1-box">
+      <summary>v1.0 paper: <i>WildfireX-SLAM: A Large-scale Low-altitude RGB-D Dataset for Wildfire SLAM and Beyond</i> (MMM 2026, oral) &mdash; abstract and video</summary>
+      <h3 class="title is-5" style="margin-top:1rem">Abstract</h3>
+      <div class="content has-text-justified">
+      <p>
+        3D Gaussian splatting (3DGS) and its subsequent variants have led to remarkable progress in simultaneous localization
+        and mapping (SLAM). While most recent 3DGS-based SLAM works focus on small-scale indoor scenes, developing 3DGS-based
+        SLAM methods for large-scale forest scenes holds great potential for many real-world applications, especially for
+        wildfire emergency response and forest management. However, this line of research is impeded by the absence of a
+        comprehensive and high-quality dataset, and collecting such a dataset over real-world scenes is costly and technically
+        infeasible. To this end, we have built a large-scale, comprehensive, and high-quality synthetic dataset for SLAM in
+        wildfire and forest environments. Leveraging the Unreal Engine 5 Electric Dreams Environment Sample Project, we
+        developed a pipeline to easily collect aerial and ground views, including ground-truth camera poses and a range of
+        additional data modalities from unmanned aerial vehicle. Our pipeline also provides flexible controls on environmental
+        factors such as light, weather, and types and conditions of wildfire, supporting the need for various tasks covering
+        forest mapping, wildfire emergency response, and beyond. The resulting pilot dataset, WildfireX-SLAM, contains 5.5k
+        low-altitude RGB-D aerial images from a large-scale forest map with a total size of 16 km². On top of WildfireX-SLAM,
+        a thorough benchmark is also conducted, which not only reveals the unique challenges of 3DGS-based SLAM in the forest
+        but also highlights potential improvements for future works.
+      </p>
+    </div>
+      <h3 class="title is-5" style="margin-top:1.5rem">Paper video</h3>
+      <video class="media-frame" controls muted playsinline preload="metadata">
+      <source src="./projects/wildfirexslam/videos/intro.mp4" type="video/mp4">
+    </video>
+    </details>
+
+    <!-- BibTeX -->
+    <h2 class="title is-3 has-text-centered section-title">BibTeX</h2>
+<pre class="bib"><code>@inproceedings{sun2026wildfirex,
+  title={WildfireX-SLAM: A Large-Scale Low-Altitude RGB-D Dataset for Wildfire SLAM and Beyond},
+  author={Sun, Zhicong and Lo, Jacqueline and Hu, Jinxing},
+  booktitle={International Conference on Multimedia Modeling},
+  pages={533--546},
+  year={2026},
+  organization={Springer}
+}</code></pre>
+  </div>
+</section>
 
 <footer class="footer">
   <div class="container">
-    <div class="content has-text-centered">
-    </div>
     <div class="columns is-centered">
       <div class="column is-8">
         <div class="content has-text-justified">
           <p>
-            This website is licensed under a <a rel="license"
-                                                href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
+            This website is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
             Commons Attribution-ShareAlike 4.0 International License</a>.
-            This webpage template is from <a href="https://github.com/nerfies/nerfies.github.io">Nerfies</a>. 
+            This webpage template is from <a href="https://github.com/nerfies/nerfies.github.io">Nerfies</a>.
             We sincerely thank <a href="https://keunhong.com/">Keunhong Park</a> for developing and open-sourcing this template.
           </p>
         </div>
       </div>
     </div>
-    <div style="text-align: center; margin-top: 30px; color: #666; font-size: 14px;">
-      &copy; 2025 Zhicong Sun. All rights reserved.
-    </div>
-    <!-- 添加访客统计地图 -->
+    <div style="text-align: center; margin-top: 30px; color: #666; font-size: 14px;">&copy; 2025&ndash;2026 Zhicong Sun. All rights reserved.</div>
     <div class="columns is-centered" style="display: none;">
       <div class="column is-3 has-text-centered">
         <a href="https://clustrmaps.com/site/1c8dy" title="ClustrMaps">
@@ -184,12 +299,12 @@ code will be publicly available.
 </footer>
 
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    var video = document.getElementById('dollyzoom');
-    video.playbackRate = 2.0;  
+  document.querySelectorAll('.ba').forEach(function (box) {
+    var after = box.querySelector('.after'), line = box.querySelector('.divider'), r = box.querySelector('input');
+    function set(v) { after.style.clipPath = 'inset(0 0 0 ' + v + '%)'; line.style.left = v + '%'; }
+    r.addEventListener('input', function () { set(r.value); });
+    set(r.value);
   });
 </script>
-
-
 </body>
 </html>
