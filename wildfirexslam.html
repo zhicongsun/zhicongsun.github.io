@@ -173,6 +173,8 @@
     <p class="caption has-text-centered">
       RGB, metric depth, surface normal and albedo (also roughness, specular and object-ID), captured in the same frame.
       Depth includes smoke and wind-moved foliage, exactly as seen in RGB. Camera poses are exact (TUM and Replica formats).
+      Depth PNGs are in centimetres (scale 100, not TUM's 5000); poses are camera-to-world with an OpenCV camera in an NED world (z down) &mdash;
+      see the <a href="https://huggingface.co/datasets/zhicongsun/WildfireX-SLAM" target="_blank">dataset card</a>.
     </p>
 
     <!-- All sequences -->
@@ -227,8 +229,8 @@ wildfirex collect configs/wildfirex_slam_v2.yaml</pre>
     <table class="table is-fullwidth roadmap">
       <tbody>
         <tr><td>v1.0 &middot; 2025</td><td>Paper dataset, published at MMM 2026 (oral): 5.5k RGB-D images over a 16 km² forest map.</td></tr>
-        <tr><td>v2.0 &middot; 2026-10</td><td>Re-collection with the <code>wildfirex</code> toolkit and simulator: 6 fire sites, canopy-following flights, 7 modalities, exact poses at 30 Hz, controllable fire, smoke, fog, leaves and lighting.</td></tr>
-        <tr><td>Next</td><td>Spreading fires with per-frame fire-front ground truth.</td></tr>
+        <tr><td>v2.0 &middot; 2026-10</td><td>Collected with the <code>wildfirex</code> toolkit and WildfireX-Sim 1.1: 6 fire sites, canopy-following flights, 7 modalities, exact poses at 30 Hz, controllable fire, smoke, fog, leaves and lighting.</td></tr>
+        <tr><td>Next</td><td>Dynamic fire scenes with per-frame fire-front ground truth.</td></tr>
       </tbody>
     </table>
 
