@@ -1,9 +1,22 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark">
 <head>
 <meta charset="UTF-8" />
+<script>
+  // Default to dark; only switch to light if the visitor explicitly chose it before.
+  // Runs in <head> so light-mode visitors don't see a dark flash.
+  if (localStorage.getItem('theme') === 'light') document.documentElement.classList.remove('dark');
+</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Zhicong Sun (Zeeco)</title>
+<meta name="description" content="Zhicong Sun (Zeeco), Postdoctoral Fellow at NTU DISC Lab. Research on robotic perception, reasoning, action, and safety in dynamic and deformable environments, with applications in construction and emergency scenarios." />
+<link rel="canonical" href="https://zhicongsun.github.io/" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Zhicong Sun (Zeeco)" />
+<meta property="og:description" content="Postdoctoral Fellow at NTU DISC Lab. Robotic perception, reasoning, action, and safety in dynamic and deformable environments." />
+<meta property="og:url" content="https://zhicongsun.github.io/" />
+<meta property="og:image" content="https://zhicongsun.github.io/images/szc.jpg" />
+<meta name="twitter:card" content="summary" />
 <link rel="shortcut icon" href="favicon.png" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -48,10 +61,8 @@
   .hover-accent:hover { color: var(--accent); }
   .hover-accent-border:hover { border-color: var(--accent); color: var(--accent); }
 
-  .news-scroll { max-height: 240px; overflow-y: auto; }
-  .news-scroll::-webkit-scrollbar { width: 6px; }
-  .news-scroll::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 3px; }
-  .dark .news-scroll::-webkit-scrollbar-thumb { background: #4b5563; }
+  .nav-links { scrollbar-width: none; }
+  .nav-links::-webkit-scrollbar { display: none; }
 
   .pub-card { transition: transform .15s ease, box-shadow .15s ease; }
   .pub-card:hover { transform: translateY(-2px); }
@@ -85,15 +96,17 @@
 
 <!-- Top nav -->
 <nav class="sticky top-0 z-30 backdrop-blur bg-white/80 dark:bg-gray-900/80 border-b border-gray-200 dark:border-gray-800">
-  <div class="max-w-5xl mx-auto px-6 py-3 flex items-center justify-between">
-    <a href="#" class="slab font-bold text-lg tracking-tight">zhicong sun</a>
-    <div class="flex items-center gap-5 text-sm">
-      <a href="#about" class="hover-accent">about</a>
-      <a href="#news" class="hover-accent">news</a>
-      <a href="#publications" class="hover-accent">publications</a>
-      <a href="#cv" class="hover-accent">cv</a>
-      <a href="#awards" class="hover-accent">awards</a>
-      <button id="theme-toggle" aria-label="toggle theme" class="ml-2 text-lg">
+  <div class="max-w-5xl mx-auto px-6 py-3 flex items-center justify-between gap-4">
+    <a href="#" class="slab font-bold text-lg tracking-tight whitespace-nowrap hidden sm:block">zhicong sun</a>
+    <div class="flex items-center gap-3 min-w-0 flex-1 sm:flex-none justify-end">
+      <div class="nav-links flex items-center gap-4 sm:gap-5 text-sm whitespace-nowrap min-w-0 overflow-x-auto">
+        <a href="#about" class="hover-accent">about</a>
+        <a href="#news" class="hover-accent">news</a>
+        <a href="#publications" class="hover-accent">publications</a>
+        <a href="#awards" class="hover-accent">awards</a>
+        <a href="#services" class="hover-accent">services</a>
+      </div>
+      <button id="theme-toggle" aria-label="toggle theme" class="shrink-0 text-lg">
         <i class="bi bi-moon-stars"></i>
       </button>
     </div>
@@ -139,7 +152,7 @@
   <!-- News -->
   <section id="news" class="mb-16">
     <h2 class="slab text-2xl font-bold mb-5 border-b border-gray-200 dark:border-gray-800 pb-2">news</h2>
-    <div class="news-scroll pr-2">
+    <div>
       <ul class="text-[15px] leading-relaxed space-y-2.5">
         <li class="flex gap-4">
           <span class="text-gray-400 dark:text-gray-500 w-24 shrink-0 font-mono text-sm">Oct 2026</span>
@@ -154,10 +167,6 @@
           <span><b>WildfireX-SLAM</b> accepted to <b>MMM 2026</b> as <span class="badge bg-amber-100 text-amber-800">Oral</span>.</span>
         </li>
         <li class="flex gap-4">
-          <span class="text-gray-400 dark:text-gray-500 w-24 shrink-0 font-mono text-sm">Sep 2025</span>
-          <span>Updated personal page; new project page for <a class="link" href="d4dgs.html">D4DGS-SLAM</a>.</span>
-        </li>
-        <li class="flex gap-4">
           <span class="text-gray-400 dark:text-gray-500 w-24 shrink-0 font-mono text-sm">Jun 2025</span>
           <span><b>D4DGS-SLAM</b> accepted to <b>IEEE/RSJ IROS 2025</b> as <span class="badge bg-amber-100 text-amber-800">Oral</span>.</span>
         </li>
@@ -165,23 +174,30 @@
           <span class="text-gray-400 dark:text-gray-500 w-24 shrink-0 font-mono text-sm">Jun 2024</span>
           <span>Wrapped up research internship at <b>Huawei 2012 Theory Lab</b>, Hong Kong.</span>
         </li>
-        <li class="flex gap-4">
-          <span class="text-gray-400 dark:text-gray-500 w-24 shrink-0 font-mono text-sm">Jun 2024</span>
-          <span>Survey paper on joint safety &amp; security risk analysis published in <b>IET Cyber-Physical Systems</b>.</span>
-        </li>
-        <li class="flex gap-4">
-          <span class="text-gray-400 dark:text-gray-500 w-24 shrink-0 font-mono text-sm">May 2024</span>
-          <span><b>AOC-IDS</b> accepted to <b>IEEE INFOCOM 2024</b> (co-author).</span>
-        </li>
-        <li class="flex gap-4">
-          <span class="text-gray-400 dark:text-gray-500 w-24 shrink-0 font-mono text-sm">Nov 2023</span>
-          <span>Contradictions identification paper published in <b>IEEE IoT Journal</b> (26-page article).</span>
-        </li>
-        <li class="flex gap-4">
-          <span class="text-gray-400 dark:text-gray-500 w-24 shrink-0 font-mono text-sm">Sep 2023</span>
-          <span>Started PhD at <b>The Hong Kong Polytechnic University</b>.</span>
-        </li>
       </ul>
+      <details class="mt-2.5">
+        <summary class="text-sm link inline-flex items-center gap-1">
+          <span class="chev">▸</span> show <b>4</b> more news
+        </summary>
+        <ul class="mt-3 text-[15px] leading-relaxed space-y-2.5">
+          <li class="flex gap-4">
+            <span class="text-gray-400 dark:text-gray-500 w-24 shrink-0 font-mono text-sm">Jun 2024</span>
+            <span>Survey paper on joint safety &amp; security risk analysis published in <b>IET Cyber-Physical Systems</b>.</span>
+          </li>
+          <li class="flex gap-4">
+            <span class="text-gray-400 dark:text-gray-500 w-24 shrink-0 font-mono text-sm">May 2024</span>
+            <span><b>AOC-IDS</b> accepted to <b>IEEE INFOCOM 2024</b> (co-author).</span>
+          </li>
+          <li class="flex gap-4">
+            <span class="text-gray-400 dark:text-gray-500 w-24 shrink-0 font-mono text-sm">Nov 2023</span>
+            <span>Contradictions identification paper published in <b>IEEE IoT Journal</b> (26-page article).</span>
+          </li>
+          <li class="flex gap-4">
+            <span class="text-gray-400 dark:text-gray-500 w-24 shrink-0 font-mono text-sm">Sep 2023</span>
+            <span>Started PhD at <b>The Hong Kong Polytechnic University</b>.</span>
+          </li>
+        </ul>
+      </details>
     </div>
   </section>
 
@@ -211,7 +227,7 @@
         </div>
         <p class="font-semibold text-[16px] leading-snug mb-1">Embracing Dynamics: Dynamics-aware 4D Gaussian Splatting SLAM</p>
         <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">
-          <u>Zhicong Sun</u>, Jinxing Hu, Jacqueline Lo
+          <u>Zhicong Sun</u>, Jacqueline Lo, Jinxing Hu
         </p>
         <p class="text-[13px] text-gray-500 dark:text-gray-400 italic mb-3">
           IEEE/RSJ International Conference on Intelligent Robots and Systems, 2025.
@@ -226,7 +242,7 @@
         <div id="bib-d4dgs" class="bib-block hidden mt-3 relative">
           <button type="button" data-bib-copy="bib-d4dgs" class="bib-copy absolute top-2 right-2 text-[11px] px-2 py-0.5 rounded bg-white/90 dark:bg-gray-900/90 border border-gray-300 dark:border-gray-600 hover-accent-border">copy</button>
 <pre class="bg-gray-50 dark:bg-gray-800/80 text-gray-800 dark:text-gray-200 p-3 pr-16 rounded border border-gray-200 dark:border-gray-700"><code>@inproceedings{sun2025embracing,
-  title={Embracing dynamics: Dynamics-aware 4d gaussian splatting slam},
+  title={Embracing dynamics: Dynamics-aware {4D} {G}aussian splatting {SLAM}},
   author={Sun, Zhicong and Lo, Jacqueline and Hu, Jinxing},
   booktitle={2025 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS)},
   pages={5331--5338},
@@ -280,7 +296,7 @@
     </div>
 
     <!-- Sub-heading 2 -->
-    <h3 class="slab text-base text-gray-500 dark:text-gray-400 uppercase tracking-wider mt-10 mb-4">Cyber-Physical Systems · Safety &amp; Security</h3>
+    <h3 class="slab text-base text-gray-500 dark:text-gray-400 uppercase tracking-wider mt-10 mb-4">Robotic &amp; CPS · Safety &amp; Security</h3>
 
     <!-- Paper 3: IoT-J Contradictions -->
     <div class="pub-card grid md:grid-cols-4 gap-5 mb-7 p-4 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800/50">
@@ -291,15 +307,15 @@
       </div>
       <div class="md:col-span-3">
         <div class="flex items-center gap-2 mb-1">
-          <span class="badge bg-emerald-100 text-emerald-800">IEEE IoT-J 2023</span>
+          <span class="badge bg-emerald-100 text-emerald-800">IEEE IoT-J 2024</span>
           <span class="badge bg-gray-200 text-gray-700">26 pages</span>
         </div>
         <p class="font-semibold text-[16px] leading-snug mb-1">Contradictions Identification of Safety and Security Requirements for Industrial Cyber-Physical Systems</p>
         <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">
-          <u>Zhicong Sun</u>, Yulong Ding, Shuang-Hua Yang
+          <u>Zhicong Sun</u>, Yulong Ding, Ke Pei, Shuang-Hua Yang
         </p>
         <p class="text-[13px] text-gray-500 dark:text-gray-400 italic mb-3">
-          IEEE Internet of Things Journal, 2023.
+          IEEE Internet of Things Journal, 2024.
         </p>
         <div class="flex flex-wrap gap-2 text-xs">
           <a href="https://ieeexplore.ieee.org/document/10314997" target="_blank" class="px-2.5 py-1 rounded border border-gray-300 dark:border-gray-600 hover-accent-border">DOI</a>
@@ -308,14 +324,14 @@
         </div>
         <div id="bib-contradictions" class="bib-block hidden mt-3 relative">
           <button type="button" data-bib-copy="bib-contradictions" class="bib-copy absolute top-2 right-2 text-[11px] px-2 py-0.5 rounded bg-white/90 dark:bg-gray-900/90 border border-gray-300 dark:border-gray-600 hover-accent-border">copy</button>
-<pre class="bg-gray-50 dark:bg-gray-800/80 text-gray-800 dark:text-gray-200 p-3 pr-16 rounded border border-gray-200 dark:border-gray-700"><code>@article{sun2023contradictions,
+<pre class="bg-gray-50 dark:bg-gray-800/80 text-gray-800 dark:text-gray-200 p-3 pr-16 rounded border border-gray-200 dark:border-gray-700"><code>@article{sun2024contradictions,
   title={Contradictions identification of safety and security requirements for industrial cyber--physical systems},
   author={Sun, Zhicong and Ding, Yulong and Pei, Ke and Yang, Shuang-Hua},
   journal={IEEE Internet of Things Journal},
   volume={11},
   number={7},
   pages={12033--12057},
-  year={2023},
+  year={2024},
   publisher={IEEE}
 }</code></pre>
         </div>
@@ -336,7 +352,7 @@
         </div>
         <p class="font-semibold text-[16px] leading-snug mb-1">Joint Safety and Security Risk Analysis in Industrial Cyber-Physical Systems: A Survey</p>
         <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">
-          <u>Zhicong Sun</u>, Guang Cheng, Yulong Ding, Shuang-Hua Yang
+          <u>Zhicong Sun</u>, Guang Chen, Yulong Ding, Shuang-Hua Yang
         </p>
         <p class="text-[13px] text-gray-500 dark:text-gray-400 italic mb-3">
           IET Cyber-Physical Systems: Theory &amp; Applications, 2024.
@@ -388,7 +404,7 @@
         <div id="bib-aocids" class="bib-block hidden mt-3 relative">
           <button type="button" data-bib-copy="bib-aocids" class="bib-copy absolute top-2 right-2 text-[11px] px-2 py-0.5 rounded bg-white/90 dark:bg-gray-900/90 border border-gray-300 dark:border-gray-600 hover-accent-border">copy</button>
 <pre class="bg-gray-50 dark:bg-gray-800/80 text-gray-800 dark:text-gray-200 p-3 pr-16 rounded border border-gray-200 dark:border-gray-700"><code>@inproceedings{zhang2024aoc,
-  title={Aoc-ids: Autonomous online framework with contrastive learning for intrusion detection},
+  title={{AOC-IDS}: Autonomous online framework with contrastive learning for intrusion detection},
   author={Zhang, Xinchen and Zhao, Running and Jiang, Zhihan and Sun, Zhicong and Ding, Yulong and Ngai, Edith CH and Yang, Shuang-Hua},
   booktitle={IEEE INFOCOM 2024-IEEE Conference on Computer Communications},
   pages={581--590},
@@ -533,11 +549,18 @@
     <ul class="space-y-3 text-[15px]">
       <li>
         <b>Reviewer</b>
-        <div class="mt-1.5 text-gray-600 dark:text-gray-400 leading-relaxed">
-          <span class="text-gray-500 dark:text-gray-500">Conferences</span> · RSS · ICRA · IROS · ICCV · MMM
+        <div class="mt-2 flex gap-4 text-gray-600 dark:text-gray-400 leading-relaxed">
+          <span class="w-28 shrink-0 text-gray-500 dark:text-gray-500">Conferences</span>
+          <span>RSS · ICRA · IROS · ICCV · MMM</span>
         </div>
-        <div class="mt-1 text-gray-600 dark:text-gray-400 leading-relaxed">
-          <span class="text-gray-500 dark:text-gray-500">Journals</span> · IEEE RA-L · IEEE Internet of Things Journal · ISPRS Journal of Photogrammetry and Remote Sensing · Archives of Computational Methods in Engineering
+        <div class="mt-2 flex gap-4 text-gray-600 dark:text-gray-400 leading-relaxed">
+          <span class="w-28 shrink-0 text-gray-500 dark:text-gray-500">Journals</span>
+          <ul class="space-y-0.5">
+            <li>IEEE Robotics and Automation Letters (RA-L)</li>
+            <li>IEEE Internet of Things Journal</li>
+            <li>ISPRS Journal of Photogrammetry and Remote Sensing</li>
+            <li>Archives of Computational Methods in Engineering</li>
+          </ul>
         </div>
       </li>
     </ul>
@@ -549,8 +572,8 @@
 <footer class="border-t border-gray-200 dark:border-gray-800 mt-8">
   <div class="max-w-5xl mx-auto px-6 py-6 text-sm text-gray-500 dark:text-gray-400">
     <div class="flex flex-col md:flex-row justify-between items-center gap-2">
-      <span>© 2025 Zhicong Sun. All rights reserved.</span>
-      <span>Last updated: May 2026 · Inspired by <a href="https://github.com/alshedivat/al-folio" target="_blank" class="link">al-folio</a></span>
+      <span>© 2026 Zhicong Sun. All rights reserved.</span>
+      <span>Last updated: Oct 2026 · Inspired by <a href="https://github.com/alshedivat/al-folio" target="_blank" class="link">al-folio</a></span>
     </div>
   </div>
 </footer>
@@ -559,10 +582,6 @@
   // Theme toggle with localStorage
   const root = document.documentElement;
   const btn = document.getElementById('theme-toggle');
-  const stored = localStorage.getItem('theme');
-  if (stored === 'dark' || (!stored && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-    root.classList.add('dark');
-  }
   btn.addEventListener('click', () => {
     root.classList.toggle('dark');
     localStorage.setItem('theme', root.classList.contains('dark') ? 'dark' : 'light');
